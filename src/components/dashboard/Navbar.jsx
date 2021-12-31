@@ -7,7 +7,7 @@ export const Navbar = () => {
   return (
     <header className="w-full bg-gradient-to-r from-brand-blue-700 to-brand-blue-900 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto">
-        <section className="relative w-full py-3.5 px-10 body-font">
+        <section className="relative w-full py-3.5 px-16 body-font">
           <div className="container flex flex-col flex-wrap items-center justify-between mx-auto md:flex-row max-w-7xl">
             <Link to="/user/home" className={`relative z-10 flex items-center w-auto text-2xl font-extrabold leading-none text-white select-none tracking-wide`}>LICIUS.</Link>
             <div className="top-0 left-0 z-0 flex items-center justify-center w-full h-full py-5 -ml-0 space-x-5 text-sm md:-ml-5 md:py-0 md:absolute">
