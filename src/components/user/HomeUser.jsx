@@ -1,11 +1,11 @@
-import { Feed } from "../dashboard/feed/Feed";
+import { Outlet } from "react-router-dom";
 import { Navbar } from "../dashboard/Navbar";
 
 export const HomeUser = () => {
   return (
-    <div className="h-full">
+    <div className="">
       <Navbar />
-      <Feed />
+      <Outlet />
     </div>
   )
 }

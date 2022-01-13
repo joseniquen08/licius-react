@@ -37,7 +37,7 @@ export const PostCard = ({ image, name, location, number }) => {
       <div>
         <p className="font-light text-gray-800">Lorem ipsum dolor sit amet consectetur adipisicing elit. At iste officiis eum quibusdam quidem ducimus reprehenderit culpa, ea nisi labore deserunt mollitia consequuntur enim, cupiditate architecto excepturi, facilis sequi voluptatem?</p>
       </div>
-      <div className="py-4 flex flex-row space-x-3">
+      <div className="py-5 flex flex-row space-x-3">
         <div className="h-14 w-14 rounded-full grow-0 flex-none overflow-hidden ">
           <img src="https://i.pravatar.cc/300?img=12" alt="image_random" className="object-cover object-center" />
         </div>

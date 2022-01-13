@@ -12,6 +12,8 @@ import { SignUpRestaurant } from './components/restaurant/SignUpRestaurant';
 import { HomeUser } from './components/user/HomeUser';
 import { User } from './components/user/User';
 import { RedirectUser } from './components/user/RedirectUser';
+import { Search } from './components/dashboard/feed/search/Search';
+import { Feed } from './components/dashboard/feed/Feed';
 
 function App() {
   return (
@@ -34,7 +36,10 @@ function App() {
           {/* Proteger las siguientes rutas */}
           <Route path="/user" element={<User />} >
             <Route index element={<RedirectUser />} />
-            <Route path="home" element={<HomeUser />} />
+            <Route path="home" element={<HomeUser />} >
+              <Route index element={<Feed />} />
+              <Route path="search" element={<Search />} />
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
