@@ -14,6 +14,8 @@ import { User } from './components/user/User';
 import { RedirectUser } from './components/user/RedirectUser';
 import { Search } from './components/dashboard/feed/search/Search';
 import { Feed } from './components/dashboard/feed/Feed';
+import { PlatesRest } from './components/restaurant/PlatesRest';
+
 
 function App() {
   return (
@@ -22,11 +24,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} >
             <Route index element={<Home />} />
+            <Route path="plates" element={< PlatesRest/>} />
           </Route>
           <Route path="/signin" element={<SignIn />} >
             <Route index element={<ChooseOption />} />
             <Route path="usuario" element={<SignInUser />} />
             <Route path="restaurante" element={<SignInRestaurant />} />
+            
           </Route>
           <Route path="/signup" element={<SignUp />} >
             <Route index element={<ChooseOption />} />

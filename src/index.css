@@ -12,3 +12,39 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
+
+.title-plate {
+    color:black;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.list-plate-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 16px 16px 16px 16px;
+    width: 50%;
+}
+
+.list-plate-description span {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.image-rest {
+    width: 150px;
+}
+
+.rest-details-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.rest-details-name {
+    text-transform: uppercase;
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-top: 20px;
+}
