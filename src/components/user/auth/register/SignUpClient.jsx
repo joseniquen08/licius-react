@@ -2,7 +2,7 @@ import { EyeIcon, EyeOffIcon, IdentificationIcon, LockClosedIcon, MailIcon } fro
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export const SignUpUser = () => {
+export const SignUpClient = () => {
 
   const [isShowing, setIsShowing] = useState(true);
 
