@@ -1,49 +1,118 @@
 import { EyeIcon, EyeOffIcon, LockClosedIcon, MailIcon } from '@heroicons/react/outline';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { FaRegUser } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
+import { clients, users } from '../../../../utils/data/users';
 
 export const SignInClient = () => {
+
+  const variants = {
+    true: {
+      x: [-10, 10, -10, 0],
+      transition: {
+        duration: 0.3,
+        type: 'spring'
+      }
+    },
+    false: {
+      x: 0
+    }
+  }
 
   const navigate = useNavigate();
 
   const [isShowing, setIsShowing] = useState(true);
+  const [notEmail, setNotEmail] = useState(false);
+  const [userNotFound, setUserNotFound] = useState(false);
+  const [errorPassword, setErrorPassword] = useState(false);
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (emailRef.current.value !== "") {
+      const client = clients.find(client => client.profile.email === emailRef.current.value);
+      if (client) {
+        const user = users.find(user => user.id === client.user_id);
+        if (user.password === passwordRef.current.value) {
+          navigate('/cliente/inicio');
+        } else {
+          setErrorPassword(true);
+        }
+      } else {
+        setUserNotFound(true);
+      }
+    } else {
+      setNotEmail(true);
+    }
+  }
+
+  const handleChange = () => {
+    setNotEmail(false);
+    setErrorPassword(false);
+    setUserNotFound(false);
+  }
 
   return (
-    <div className="">
-      <p className="text-xl text-center font-medium">Ingresa a tu cuenta</p>
-      <p className="text-base py-2 text-center">¿Eres una empresa? Inicia sesión <Link to="/signin/restaurante" className="text-brand-green font-bold">aquí</Link></p>
-      <div className="w-80 space-y-4 my-8">
+    <form onSubmit={handleSubmit} className="px-4">
+      <div className="space-y-1.5">
+        <p className="text-[0.9rem] font-medium text-center">Ingresa a tu cuenta</p>
+        <div className="flex items-center justify-center cursor-default">
+          <div className="flex items-center px-4 py-2 space-x-2 rounded-md bg-stone-100">
+            <FaRegUser/>
+            <p className="font-medium text-[0.95rem]">Cliente</p>
+          </div>
+        </div>
+      </div>
+      <p className="py-2 text-center text-[0.95rem]">¿Eres una empresa? Inicia sesión <Link to="/signin/restaurante" className="font-semibold underline decoration-transparent hover:decoration-current text-brand-blue-900 underline-offset-1">aquí</Link></p>
+      <motion.div
+        animate={notEmail ? 'true' : userNotFound ? 'true' : errorPassword ? 'true' : 'false'}
+        variants={variants}
+        className="my-4 space-y-3"
+      >
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email
           </label>
-          <div className="mt-1 relative rounded-md shadow-sm">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <div className="relative mt-1 rounded-md shadow-sm">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <span className="text-gray-500 sm:text-sm">
-                <MailIcon className="h-5 w-5" />
+                <MailIcon className="w-5 h-5" />
               </span>
             </div>
             <input
-              type="text"
+              type="email"
               name="email"
-              className="block w-full text-base focus:ring-2 focus:ring-gray-200 focus:outline-none pl-10 pr-3 py-1.5 border border-slate-300 rounded-md"
+              ref={emailRef}
+              onChange={handleChange}
+              className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md md:font-medium focus:ring-2 invalid:border-red-600 invalid:text-red-600 invalid:focus:ring-red-100 focus:ring-gray-200 focus:outline-none border-slate-300"
             />
           </div>
+          {
+            notEmail ? <p className="mt-1 text-sm font-medium text-red-500">Ingresar un correo.</p> : <></>
+          }
+          {
+            userNotFound ? <p className="mt-1 text-sm font-medium text-red-500">Correo no registrado.</p> : <></>
+          }
         </div>
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">
             Password
           </label>
-          <div className="mt-1 relative rounded-md shadow-sm">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <div className="relative mt-1 rounded-md shadow-sm">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <span className="text-gray-500 sm:text-sm">
-                <LockClosedIcon className="h-5 w-5" />
+                <LockClosedIcon className="w-5 h-5" />
               </span>
             </div>
             <input
               type={isShowing ? 'password' : 'text'}
               name="password"
-              className="block w-full text-base focus:ring-2 focus:ring-gray-200 focus:outline-none pl-10 pr-3 py-1.5 border border-slate-300 rounded-md"
+              ref={passwordRef}
+              required
+              onChange={handleChange}
+              className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md md:font-medium focus:ring-2 focus:ring-gray-200 focus:outline-none border-slate-300"
             />
             <button
               onClick={() => {
@@ -55,30 +124,31 @@ export const SignInClient = () => {
               {
                 isShowing === true ? (
                   <span className="text-gray-500 sm:text-sm">
-                    <EyeIcon className="h-5 w-5" />
+                    <EyeIcon className="w-5 h-5" />
                   </span>
                 ) : (
                   <span className="text-gray-500 sm:text-sm">
-                    <EyeOffIcon className="h-5 w-5" />
+                    <EyeOffIcon className="w-5 h-5" />
                   </span>
                 )
               }
             </button>
           </div>
+          {
+            errorPassword ? <p className="mt-1 text-sm font-medium text-red-500">Contraseña incorrecta.</p> : <></>
+          }
         </div>
+      </motion.div>
+      <div className="flex justify-center w-full">
+        <Link to='/recovery' className="my-4 text-sm text-center underline decoration-transparent hover:decoration-current underline-offset-1">Olvidé mi contraseña</Link>
       </div>
-      <div className="w-full flex justify-center">
-        <Link to='/recovery' className="text-sm text-center my-4">Olvidé mi contraseña</Link>
-      </div>
-      <div>
-        <button
-          onClick={() => navigate('/user/home')}
-          type="button"
-          className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-full hover:bg-brand-green-700 text-white bg-brand-green-500 focus:outline-none"
-        >
-          Iniciar sesión
-        </button>
-      </div>
-    </div>
+      <motion.button
+        type="submit"
+        whileHover={{ scale: 1.03 }}
+        className="w-full px-4 py-2 text-sm font-medium tracking-wide text-white border border-transparent rounded-md bg-brand-blue-900/90 focus:outline-none"
+      >
+        Iniciar sesión
+      </motion.button>
+    </form>
   )
 }

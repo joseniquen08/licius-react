@@ -17,17 +17,17 @@ export const SignUpRestaurant = () => {
 
   return (
     <div className="">
-      <p className="text-xl text-center font-medium">Regístrate como empresa</p>
-      <p className="text-base py-2 text-center">¿Eres usuario? Regístrate <Link to="/signup/usuario" className="text-brand-green font-bold">aquí</Link></p>
-      <div className="w-96 space-y-4 mt-8 mb-2">
+      <p className="text-xl font-medium text-center">Regístrate como empresa</p>
+      <p className="py-2 text-base text-center">¿Eres cliente? Regístrate <Link to="/signup/cliente" className="font-bold text-brand-green">aquí</Link></p>
+      <div className="mt-8 mb-2 space-y-4 w-96">
         <div>
           <label htmlFor="business_name" className="block text-sm font-medium text-gray-700">
             Razón Social
           </label>
-          <div className="mt-1 relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-auto">
+          <div className="relative mt-1">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-auto">
               <span className="text-gray-500 sm:text-sm">
-                <OfficeBuildingIcon className="h-5 w-5" />
+                <OfficeBuildingIcon className="w-5 h-5" />
               </span>
             </div>
             <input
@@ -42,10 +42,10 @@ export const SignUpRestaurant = () => {
           <label htmlFor="ruc" className="block text-sm font-medium text-gray-700">
             RUC
           </label>
-          <div className="mt-1 relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-auto">
+          <div className="relative mt-1">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-auto">
               <span className="text-gray-500 sm:text-sm">
-                <FingerPrintIcon className="h-5 w-5" />
+                <FingerPrintIcon className="w-5 h-5" />
               </span>
             </div>
             <input
@@ -60,10 +60,10 @@ export const SignUpRestaurant = () => {
           <label htmlFor="tradename" className="block text-sm font-medium text-gray-700">
             Nombre comercial
           </label>
-          <div className="mt-1 relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-auto">
+          <div className="relative mt-1">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-auto">
               <span className="text-gray-500 sm:text-sm">
-                <IdentificationIcon className="h-5 w-5" />
+                <IdentificationIcon className="w-5 h-5" />
               </span>
             </div>
             <input
@@ -78,10 +78,10 @@ export const SignUpRestaurant = () => {
           <label htmlFor="description" className="block text-sm font-medium text-gray-700">
             Descripción
           </label>
-          <div className="mt-1 relative">
-            <div className="absolute mt-2 left-0 top-0 pl-3 flex items-center pointer-events-auto">
+          <div className="relative mt-1">
+            <div className="absolute top-0 left-0 flex items-center pl-3 mt-2 pointer-events-auto">
               <span className="text-gray-500 sm:text-sm">
-                <MenuAlt1Icon className="h-5 w-5" />
+                <MenuAlt1Icon className="w-5 h-5" />
               </span>
             </div>
             <textarea
@@ -98,8 +98,8 @@ export const SignUpRestaurant = () => {
             Categoría
           </label>
           <Listbox value={selected} onChange={setSelected}>
-            <div className="relative mt-1 z-10">
-              <Listbox.Button className="relative w-full py-2 pl-4 pr-10 text-left bg-white rounded-lg border border-slate-300 cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-gray-200 focus-visible:ring-offset-2 sm:text-sm">
+            <div className="relative z-10 mt-1">
+              <Listbox.Button className="relative w-full py-2 pl-4 pr-10 text-left bg-white border rounded-lg cursor-default border-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-gray-200 focus-visible:ring-offset-2 sm:text-sm">
                 <span className="block truncate">{selected.name}</span>
                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                   <SelectorIcon
@@ -156,29 +156,25 @@ export const SignUpRestaurant = () => {
           <label htmlFor="file" className="block text-sm font-medium text-gray-700">
             Ficha RUC
           </label>
-          <div className="mt-1 relative">
-            <div className="absolute mt-2 left-0 top-0 pl-3 flex items-center pointer-events-auto">
+          <div className="relative mt-1">
+            <div className="absolute top-0 left-0 flex items-center pl-3 mt-2 pointer-events-auto">
               <span className="text-gray-500 sm:text-sm">
-                <DocumentTextIcon className="h-5 w-5" />
+                <DocumentTextIcon className="w-5 h-5" />
               </span>
             </div>
-            <input type="file" id="file" name="file" class="block w-full pl-10 text-sm text-gray-500
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-full file:border-0
-              file:text-sm file:font-semibold
-              file:bg-brand-green-500/20 file:text-brand-green-700"
+            <input type="file" id="file" name="file" className="block w-full pl-10 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-green-500/20 file:text-brand-green-700"
             />
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-center items-center space-x-2">
-        <input type="checkbox" id="tyc" className="text-sm text-center my-5 accent-brand-green-500" />
+      <div className="flex items-center justify-center w-full space-x-2">
+        <input type="checkbox" id="tyc" className="my-5 text-sm text-center accent-brand-green-500" />
         <label htmlFor="tyc" className="text-xs">Acepto las Condiciones de Uso y Política de privacidad</label>
       </div>
       <div>
         <button
           type="submit"
-          className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-brand-green-500 focus:outline-none"
+          className="w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md bg-brand-green-500 focus:outline-none"
         >
           Enviar solicitud
         </button>
