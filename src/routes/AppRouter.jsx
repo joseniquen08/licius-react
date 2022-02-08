@@ -4,7 +4,6 @@ import { HomeClient } from "../components/client/HomeClient";
 import { RedirectClient } from "../components/client/RedirectClient";
 import { Feed } from "../components/dashboard/feed/Feed";
 import { Search } from "../components/dashboard/feed/search/Search";
-import { NotFound } from "../components/error/NotFound";
 import { Home } from "../components/landing/Home";
 import { HomeRestaurant } from "../components/restaurant/HomeRestaurant";
 import { PlatesRest } from "../components/restaurant/PlatesRest";
@@ -16,6 +15,7 @@ import { SignUpClient } from "../components/user/auth/register/SignUpClient";
 import { SignUpRestaurant } from "../components/user/auth/register/SignUpRestaurant";
 import { Auth } from "../pages/Auth";
 import { LandingPage } from "../pages/LandingPage";
+import { NotFound } from "../pages/NotFound";
 
 export const AppRouter = () => {
   return (

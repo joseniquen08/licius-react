@@ -28,7 +28,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className={`sticky top-0 bg-brand-gray z-40 ${showBorder ? 'border-b border-gray-300' : ''}`}>
+      <nav className={`sticky top-0 mt-1 bg-brand-gray z-40 ${showBorder ? 'border-b border-gray-300' : ''}`}>
         <div className="relative flex flex-row items-center justify-between px-3 py-3 mx-auto lg:py-2 sm:px-4 lg:px-10 max-w-7xl">
           <div className="flex items-center">
             <div className="flex items-center md:hidden">
