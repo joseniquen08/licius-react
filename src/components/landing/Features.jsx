@@ -3,7 +3,7 @@ import { FaCommentsDollar, FaStar, FaUserFriends } from 'react-icons/fa';
 export const Features = () => {
   return (
     <section className="py-2 bg-brand-gray">
-      <div className="container items-center max-w-6xl px-10 mx-auto sm:px-20 md:px-32 lg:px-16">
+      <div className="container items-center max-w-6xl px-4 mx-auto sm:px-20 md:px-32 lg:px-16">
         <div className="flex flex-wrap items-center -mx-3">
           <div className="order-1 w-full px-3 lg:w-1/2 lg:order-0">
             <div className="w-full lg:max-w-md">
@@ -11,15 +11,15 @@ export const Features = () => {
               <ul>
                 <li className="flex items-center py-2 space-x-4 xl:py-3">
                   <FaUserFriends size={24} className="mx-1 text-pink-500"/>
-                  <span className="font-medium text-gray-500">Conecta con usuarios</span>
+                  <span className="text-gray-500 tracking-tight">Conecta con usuarios</span>
                 </li>
                 <li className="flex items-center py-2 space-x-4 xl:py-3">
                   <FaStar size={24} className="mx-1 text-yellow-500"/>
-                  <span className="font-medium text-gray-500">Recomienda tu comida favorita</span>
+                  <span className="text-gray-500 tracking-tight">Recomienda tu comida favorita</span>
                 </li>
                 <li className="flex items-center py-2 space-x-4 xl:py-3">
                   <FaCommentsDollar size={24} className="mx-1 text-green-500"/>
-                  <span className="font-medium text-gray-500">Interactúa con tus restaurantes favoritos</span>
+                  <span className="text-gray-500 tracking-tight">Interactúa con tus restaurantes favoritos</span>
                 </li>
               </ul>
             </div>
