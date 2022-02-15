@@ -57,7 +57,7 @@ export const SignInRestaurant = () => {
   return (
     <form onSubmit={handleSubmit} className="px-4">
       <div className="space-y-1.5">
-        <p className="text-[0.9rem] font-medium text-center">Ingresa a tu cuenta empresa</p>
+        <p className="text-[0.9rem] font-medium text-center">Ingresa a tu cuenta</p>
         <div className="flex items-center justify-center cursor-default">
           <div className="flex items-center px-4 py-2 space-x-2 rounded-md bg-stone-100">
             <FaRegBuilding/>
@@ -140,7 +140,7 @@ export const SignInRestaurant = () => {
         </div>
       </motion.div>
       <div className="flex justify-center w-full">
-        <Link to='/recovery' className="my-4 text-sm text-center">Olvidé mi contraseña</Link>
+        <Link to='/recovery' className="my-4 text-sm text-center underline decoration-transparent hover:decoration-current underline-offset-2">Olvidé mi contraseña</Link>
       </div>
       <motion.button
         type="submit"
@@ -149,6 +149,10 @@ export const SignInRestaurant = () => {
       >
         Iniciar sesión
       </motion.button>
+      <div className="flex py-2.5 text-[0.85rem] items-center justify-center space-x-1">
+        <p>¿No tienes una cuenta?</p>
+        <p>Regístrate <Link to="/signup/restaurante" className="font-bold text-brand-blue-900">aquí</Link></p>
+      </div>
     </form>
   )
 }

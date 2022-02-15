@@ -65,7 +65,7 @@ export const SignInClient = () => {
           </div>
         </div>
       </div>
-      <p className="py-2 text-center text-[0.95rem]">¿Eres una empresa? Inicia sesión <Link to="/signin/restaurante" className="font-semibold underline decoration-transparent hover:decoration-current text-brand-blue-900 underline-offset-1">aquí</Link></p>
+      <p className="py-2 text-center text-[0.95rem]">¿Eres una empresa? Inicia sesión <Link to="/signin/restaurante" className="font-semibold text-brand-blue-900">aquí</Link></p>
       <motion.div
         animate={notEmail ? 'true' : userNotFound ? 'true' : errorPassword ? 'true' : 'false'}
         variants={variants}
@@ -140,7 +140,7 @@ export const SignInClient = () => {
         </div>
       </motion.div>
       <div className="flex justify-center w-full">
-        <Link to='/recovery' className="my-4 text-sm text-center underline decoration-transparent hover:decoration-current underline-offset-1">Olvidé mi contraseña</Link>
+        <Link to='/recovery' className="my-4 text-sm text-center underline decoration-transparent hover:decoration-current underline-offset-2">Olvidé mi contraseña</Link>
       </div>
       <motion.button
         type="submit"
@@ -149,6 +149,10 @@ export const SignInClient = () => {
       >
         Iniciar sesión
       </motion.button>
+      <div className="flex py-2.5 text-[0.85rem] items-center justify-center space-x-1">
+        <p>¿No tienes una cuenta?</p>
+        <p>Regístrate <Link to="/signup/cliente" className="font-bold text-brand-blue-900">aquí</Link></p>
+      </div>
     </form>
   )
 }

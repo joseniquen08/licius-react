@@ -1,12 +1,15 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: [
     "./src/**/*.{js,jsx}",
   ],
   theme: {
+    screens: {
+      'xs': '480px',
+      ...defaultTheme.screens,
+    },
     extend: {
-      screens: {
-        'xs': '480px',
-      },
       fontFamily: {
         'inter': ['"Inter"', 'sans-serif'],
       },

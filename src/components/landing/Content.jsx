@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 
 export const Content = () => {
   return (
-    <section class="w-full bg-brand-gray pt-7 pb-7 md:pt-20 md:pb-24">
-      <div class="box-border flex flex-col items-center content-center px-4 mx-auto leading-6 text-black border-0 border-gray-300 border-solid md:flex-row max-w-7xl lg:px-16">
+    <section class="w-full bg-brand-gray py-7 md:pt-20 md:pb-24 space-y-16">
+      <div class="box-border flex flex-col items-center md:items-start content-center px-4 mx-auto leading-6 text-black md:flex-row xs:px-6 sm:px-14 md:px-20 lg:px-16">
         <div class="box-border relative w-full max-w-md mt-8 mb-10 text-center bg-no-repeat bg-contain border-solid md:ml-0 md:mt-0 md:max-w-none lg:mb-0 md:w-1/2">
           <motion.img animate={{ y: [10, -5, 5, -5, 10] }} transition={{ repeat: Infinity, duration: 6 }} src="images/capture-dashboard.png" alt="capture-dashboard" class="shadow-xl rounded-xl" />
         </div>
@@ -11,7 +11,7 @@ export const Content = () => {
           <h2 class="m-0 text-xl font-bold leading-tight tracking-tight border-0 border-gray-300 lg:text-3xl md:text-2xl">
             Boost Productivity
           </h2>
-          <p class="pt-4 pb-8 m-0 leading-7 text-gray-700 border-0 border-gray-300 sm:pr-12 xl:pr-32 lg:text-lg">
+          <p class="pt-4 pb-8 m-0 leading-7 text-gray-700 border-0 border-gray-300 sm:pr-12 lg:text-lg">
             Build an atmosphere that creates productivity in your organization and your company culture.
           </p>
           <ul class="p-0 m-0 leading-6 border-0 border-gray-300">
@@ -27,8 +27,8 @@ export const Content = () => {
           </ul>
         </div>
       </div>
-      <div class="box-border flex flex-col items-center content-center px-4 mx-auto mt-2 leading-6 text-black border-0 border-gray-300 border-solid md:mt-20 xl:mt-0 md:flex-row max-w-7xl lg:px-16">
-        <div class="box-border w-full text-black border-solid md:w-1/2 md:pl-6 xl:pl-32">
+      <div class="box-border flex flex-col items-center md:items-start content-center px-4 mx-auto mt-2 leading-6 text-black md:mt-20 md:flex-row xs:px-6 sm:px-14 md:px-20 lg:px-16">
+        <div class="box-border w-full text-black border-solid md:w-1/2 md:pl-6">
           <h2 class="m-0 text-xl font-bold leading-tight tracking-tight border-0 border-gray-300 lg:text-3xl md:text-2xl">
             Automated Tasks
           </h2>
