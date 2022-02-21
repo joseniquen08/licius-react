@@ -6,7 +6,6 @@ import { Feed } from "../components/dashboard/feed/Feed";
 import { Search } from "../components/dashboard/feed/search/Search";
 import { Home } from "../components/landing/Home";
 import { HomeRestaurant } from "../components/restaurant/HomeRestaurant";
-import { PlatesRest } from "../components/restaurant/PlatesRest";
 import { RedirectRestaurant } from "../components/restaurant/RedirectRestaurant";
 import { Restaurant } from "../components/restaurant/Restaurant";
 import { SignInClient } from "../components/user/auth/login/SignInClient";
@@ -22,7 +21,7 @@ export const AppRouter = () => {
     <Routes>
       <Route path="/" element={<LandingPage />} >
         <Route index element={<Home />} />
-        <Route path="plates" element={< PlatesRest/>} />
+        {/* <Route path="plates" element={<PlatesRest/>} /> */}
       </Route>
       <Route path="/signin" element={<Auth />} >
         <Route path="cliente" element={<SignInClient />} />
