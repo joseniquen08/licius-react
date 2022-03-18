@@ -84,6 +84,7 @@ export const SignInClient = () => {
             <input
               type="email"
               name="email"
+              id="email"
               ref={emailRef}
               onChange={handleChange}
               className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md md:font-medium focus:ring-2 invalid:border-red-600 invalid:text-red-600 invalid:focus:ring-red-100 focus:ring-gray-200 focus:outline-none border-slate-300"
@@ -109,6 +110,7 @@ export const SignInClient = () => {
             <input
               type={isShowing ? 'password' : 'text'}
               name="password"
+              id="password"
               ref={passwordRef}
               required
               onChange={handleChange}
