@@ -57,12 +57,12 @@ export const Navbar = () => {
             </ul>
           </div>
           <div className="flex flex-row items-center space-x-2 sm:space-x-3">
-            <Link to="/signin/cliente" className={`inline-flex items-center justify-center w-20 sm:w-24 py-2 text-sm sm:text-base font-medium text-white bg-brand-brown-500 hover:bg-brand-brown-700 rounded-md focus:outline-none ${showBorder ? 'shadow-none' : 'shadow-md shadow-brand-brown-500/50'}`}>
-                  Sign in
+            <Link to="/signin/cliente" className={`inline-flex items-center justify-center w-28 sm:w-32 py-2 text-sm sm:text-base font-medium text-white bg-brand-brown-500 hover:bg-brand-brown-700 rounded-md focus:outline-none ${showBorder ? 'shadow-none' : 'shadow-md shadow-brand-brown-500/50'}`}>
+              Ingresar
             </Link>
             <span className="inline-flex">
-              <Link to="/signup/cliente" className={`inline-flex items-center justify-center w-20 sm:w-24 py-2 text-sm sm:text-base font-medium text-white bg-brand-green-500 rounded-md hover:bg-brand-green-700 focus:outline-none ${showBorder ? 'shadow-none' : 'shadow-md shadow-brand-green-500/50'}`}>
-                Sign up
+              <Link to="/signup/cliente" className={`inline-flex items-center justify-center w-28 sm:w-32 py-2 text-sm sm:text-base font-medium text-white bg-brand-green-500 rounded-md hover:bg-brand-green-700 focus:outline-none ${showBorder ? 'shadow-none' : 'shadow-md shadow-brand-green-500/50'}`}>
+                Registrarse
               </Link>
             </span>
           </div>

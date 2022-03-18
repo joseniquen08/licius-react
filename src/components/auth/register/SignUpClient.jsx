@@ -34,13 +34,13 @@ export const SignUpClient = () => {
       <div className="space-y-1.5">
         <p className="text-[0.9rem] font-medium text-center">Regístrate</p>
         <div className="flex items-center justify-center cursor-default">
-          <div className="flex items-center px-4 py-2 space-x-2 rounded-md bg-stone-100">
+          <div className="flex items-center px-4 py-2 space-x-2 rounded-md bg-stone-100 hover:bg-stone-200/80">
             <FaRegUser/>
             <p className="font-medium text-[0.95rem]">Cliente</p>
           </div>
         </div>
       </div>
-      <p className="py-2 text-center text-[0.95rem]">¿Eres una empresa? Regístrate <Link to="/signup/restaurante" className="font-semibold text-brand-blue-900">aquí</Link></p>
+      <p className="py-2 text-center text-[0.95rem]">¿Eres una empresa? Regístrate <Link to="/signup/restaurante" className="font-bold text-brand-green-500">aquí</Link></p>
       <div className="w-full mx-auto mt-3 mb-2 space-y-2">
         <div>
           <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
@@ -50,11 +50,12 @@ export const SignUpClient = () => {
             <input
               type="text"
               name="first_name"
+              id="first_name"
               ref={firstNameRef}
-              className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer focus:ring-2 focus:ring-brand-blue-900/50 focus:text-gray-700 focus:border-transparent focus:outline-none border-slate-300 valid:border-green-500"
+              className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer focus:ring-2 focus:ring-brand-green-500/50 focus:text-gray-700 focus:border-transparent focus:outline-none border-slate-300 valid:border-green-500"
               required
             />
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-auto peer-focus:text-brand-blue-900">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-auto peer-focus:text-brand-green-500">
               <span className="sm:text-sm">
                 <IdentificationIcon className="w-5 h-5" />
               </span>
@@ -69,11 +70,12 @@ export const SignUpClient = () => {
             <input
               type="text"
               name="last_name"
+              id="last_name"
               ref={lastNameRef}
-              className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer focus:text-gray-700 focus:ring-2 focus:ring-brand-blue-900/50 focus:border-transparent focus:outline-none border-slate-300 valid:border-green-500"
+              className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer focus:text-gray-700 focus:ring-2 focus:ring-brand-green-500/50 focus:border-transparent focus:outline-none border-slate-300 valid:border-green-500"
               required
             />
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-auto peer-focus:text-brand-blue-900">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-auto peer-focus:text-brand-green-500">
               <span className="sm:text-sm">
                 <IdentificationIcon className="w-5 h-5" />
               </span>
@@ -88,11 +90,11 @@ export const SignUpClient = () => {
             <input
               type="email"
               name="email"
+              id="email"
               ref={emailRef}
-              className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer invalid:border-red-600 focus:text-gray-700 invalid:text-red-600 invalid:focus:ring-red-400 focus:ring-2 focus:ring-brand-blue-900/50 valid:border-green-500 focus:border-transparent focus:outline-none border-slate-300"
-              required
+              className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer invalid:border-red-600 focus:text-gray-700 invalid:text-red-600 invalid:focus:ring-red-400 focus:ring-2 focus:ring-brand-green-500/50 focus:border-transparent focus:outline-none border-slate-300"
             />
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-auto peer-focus:text-brand-blue-900 peer-invalid:peer-focus:text-red-600">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-auto peer-focus:text-brand-green-500 peer-invalid:peer-focus:text-red-600">
               <span className="sm:text-sm">
                 <MailIcon className="w-5 h-5" />
               </span>
@@ -107,11 +109,12 @@ export const SignUpClient = () => {
             <input
               type={isShowing ? 'password' : 'text'}
               name="password"
+              id="password"
               ref={passwordRef}
               required
-              className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer focus:text-gray-700 focus:ring-2 focus:ring-brand-blue-900/50 focus:border-transparent focus:outline-none border-slate-300"
+              className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer focus:text-gray-700 focus:ring-2 focus:ring-brand-green-500/50 focus:border-transparent focus:outline-none border-slate-300"
             />
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-auto peer-focus:text-brand-blue-900">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-auto peer-focus:text-brand-green-500">
               <span className="sm:text-sm">
                 <LockClosedIcon className="w-5 h-5" />
               </span>
@@ -121,7 +124,7 @@ export const SignUpClient = () => {
                 setIsShowing((isShowing) => !isShowing);
               }}
               type="button"
-              className="absolute peer-focus:text-brand-blue-900 text-gray-500 border-l peer-focus:border-brand-blue-500 inset-y-0 right-0 pl-2 pr-2.5 flex items-center"
+              className="absolute text-gray-500 border-l inset-y-0 right-0 pl-2 pr-2.5 flex items-center"
             >
               {
                 isShowing === true ? (
@@ -145,13 +148,13 @@ export const SignUpClient = () => {
       <motion.button
         type="submit"
         whileHover={{ scale: 1.03 }}
-        className="w-full px-4 py-2 text-sm font-medium tracking-wide text-white border border-transparent rounded-md bg-brand-blue-900/90 focus:outline-none"
+        className="w-full px-4 py-2 text-sm font-medium tracking-wide text-white border border-transparent rounded-md bg-brand-green-500/90 focus:outline-none"
       >
         Registrarme
       </motion.button>
       <div className="flex py-2.5 text-[0.85rem] items-center justify-center space-x-1">
         <p>¿Ya estás registrado?</p>
-        <p>Inicia sesión <Link to="/signin/cliente" className="font-bold text-brand-blue-900">aquí</Link></p>
+        <p>Inicia sesión <Link to="/signin/cliente" className="font-bold text-brand-green-500">aquí</Link></p>
       </div>
     </form>
   )
