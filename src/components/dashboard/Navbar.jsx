@@ -20,20 +20,16 @@ export const Navbar = () => {
   }
 
   const logout = () => {
-    if (location.pathname.split('/')[1] === "cliente") {
-      navigate("/signin/cliente");
-    } else if (location.pathname.split('/')[1] === "restaurante") {
-      navigate("/signin/restaurante");
-    }
+    navigate(`/signin/${location.pathname.split('/')[1]}`);
   }
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-gradient-to-r from-brand-blue-700 to-brand-blue-900">
-        <div className="mx-auto max-w-7xl">
+      <header className="sticky top-0 z-40 w-full bg-brand-green-500 h-16">
+        <div className="mx-auto max-w-7xl h-full flex items-center justify-center">
           <section className="relative w-full py-3.5 px-16 body-font">
             <div className="container flex flex-col flex-wrap items-center justify-between mx-auto md:flex-row max-w-7xl">
-              <Link to={location.pathname.split('/')[1] === "cliente" ? "/cliente/inicio" : "/restaurante/inicio"} className={`relative z-10 flex items-center w-auto text-2xl font-extrabold leading-none text-white select-none tracking-wide`}>LICIUS.</Link>
+              <Link to={`/${location.pathname.split('/')[1]}/inicio`} className={`relative z-10 flex items-center w-auto text-2xl font-extrabold leading-none text-white select-none tracking-wide`}>LICIUS.</Link>
               <div className="top-0 left-0 z-0 flex items-center justify-center w-full h-full py-5 -ml-0 space-x-5 text-sm md:-ml-5 md:py-0 md:absolute">
                 <div className="relative w-96">
                   <button onClick={openSearchModal} type="button" className="focus:outline-none cursor-point pl-9 pr-6 hover:bg-opacity-30 text-left text-white text-sm w-full rounded-full py-1.5 bg-white bg-opacity-20">

@@ -3,14 +3,14 @@ import React from 'react'
 
 export const PostCard = ({ image, name, location, number }) => {
   return (
-    <div className="w-full border rounded-xl py-4 px-8">
+    <div className="w-full border rounded-xl py-6 px-11">
       <div className="flex flex-row items-center space-x-3 py-1 px-1">
-        <div className="h-16 w-16 rounded-full grow-0 flex-none overflow-hidden ">
+        <div className="h-12 w-12 rounded-full grow-0 flex-none overflow-hidden ">
           <img src={image} alt="image_random" className="object-cover object-center" />
         </div>
         <div>
-          <p className="text-base font-semibold">{name.first} {name.last}</p>
-          <p className="text-sm text-gray-700">{location.city}, {location.country}</p>
+          <p className="text-base font-bold">{name.first} {name.last}</p>
+          <p className="text-sm font-medium text-gray-600">{location.city}, {location.country}</p>
         </div>
       </div>
       <div className="rounded-xl overflow-hidden my-3">
