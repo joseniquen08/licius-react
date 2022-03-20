@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { isSuccess, loadingLogin, signInClientAsync } from '../../../redux/slices/auth/signInClientSlice';
+import { emailNotFound, isSuccess, loadingLogin, passwordIsIncorrect, setEmailNotFound, setPasswordIsIncorrect, signInClientAsync } from '../../../redux/slices/auth/signInClientSlice';
 
 const variants = {
   true: {
@@ -33,6 +33,8 @@ export const SignInClient = () => {
   const dispatch = useDispatch();
   const loading = useSelector(loadingLogin) ?? false;
   const isLogged = useSelector(isSuccess) ?? false;
+  const passwordIncorrect = useSelector(passwordIsIncorrect) ?? false;
+  const invalidEmail = useSelector(emailNotFound) ?? false;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,17 +45,6 @@ export const SignInClient = () => {
         role: 2
       }
       dispatch(signInClientAsync(client));
-      // const client = clients.find(client => client.profile.email === emailRef.current.value);
-      // if (client) {
-      //   const user = users.find(user => user.id === client.user_id);
-      //   if (user.password === passwordRef.current.value) {
-      //     navigate('/cliente/inicio');
-      //   } else {
-      //     setErrorPassword(true);
-      //   }
-      // } else {
-      //   setUserNotFound(true);
-      // }
     } else {
       setNotEmail(true);
     }
@@ -63,14 +54,16 @@ export const SignInClient = () => {
     setNotEmail(false);
     setErrorPassword(false);
     setUserNotFound(false);
+    dispatch(setPasswordIsIncorrect(false));
+    dispatch(setEmailNotFound(false));
   }
 
   useEffect(() => {
-    if (isLogged) {
-      navigate('/cliente/inicio');
-    }
+    if (isLogged) navigate('/cliente/inicio');
+    if (passwordIncorrect) setErrorPassword(true);
+    if (invalidEmail) setUserNotFound(true);
     // eslint-disable-next-line
-  }, [isLogged]);
+  }, [isLogged, passwordIncorrect, invalidEmail]);
 
   return (
     <form onSubmit={handleSubmit} className="px-4">
