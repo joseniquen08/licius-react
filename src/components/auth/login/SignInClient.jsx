@@ -1,24 +1,25 @@
 import { EyeIcon, EyeOffIcon, LockClosedIcon, MailIcon } from '@heroicons/react/outline';
 import { motion } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { clients, users } from '../../../utils/data/users';
+import { isSuccess, loadingLogin, signInClientAsync } from '../../../redux/slices/auth/signInClientSlice';
+
+const variants = {
+  true: {
+    x: [-10, 10, -10, 0],
+    transition: {
+      duration: 0.3,
+      type: 'spring'
+    }
+  },
+  false: {
+    x: 0
+  }
+}
 
 export const SignInClient = () => {
-
-  const variants = {
-    true: {
-      x: [-10, 10, -10, 0],
-      transition: {
-        duration: 0.3,
-        type: 'spring'
-      }
-    },
-    false: {
-      x: 0
-    }
-  }
 
   const navigate = useNavigate();
 
@@ -29,20 +30,30 @@ export const SignInClient = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  const dispatch = useDispatch();
+  const loading = useSelector(loadingLogin) ?? false;
+  const isLogged = useSelector(isSuccess) ?? false;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (emailRef.current.value !== "") {
-      const client = clients.find(client => client.profile.email === emailRef.current.value);
-      if (client) {
-        const user = users.find(user => user.id === client.user_id);
-        if (user.password === passwordRef.current.value) {
-          navigate('/cliente/inicio');
-        } else {
-          setErrorPassword(true);
-        }
-      } else {
-        setUserNotFound(true);
+      const client = {
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+        role: 2
       }
+      dispatch(signInClientAsync(client));
+      // const client = clients.find(client => client.profile.email === emailRef.current.value);
+      // if (client) {
+      //   const user = users.find(user => user.id === client.user_id);
+      //   if (user.password === passwordRef.current.value) {
+      //     navigate('/cliente/inicio');
+      //   } else {
+      //     setErrorPassword(true);
+      //   }
+      // } else {
+      //   setUserNotFound(true);
+      // }
     } else {
       setNotEmail(true);
     }
@@ -53,6 +64,13 @@ export const SignInClient = () => {
     setErrorPassword(false);
     setUserNotFound(false);
   }
+
+  useEffect(() => {
+    if (isLogged) {
+      navigate('/cliente/inicio');
+    }
+    // eslint-disable-next-line
+  }, [isLogged]);
 
   return (
     <form onSubmit={handleSubmit} className="px-4">
@@ -149,7 +167,7 @@ export const SignInClient = () => {
         whileHover={{ scale: 1.03 }}
         className="w-full px-4 py-2 text-sm font-medium tracking-wide text-white border border-transparent rounded-md bg-brand-green-500 focus:outline-none"
       >
-        Iniciar sesión
+        {loading ? 'Loading' : 'Iniciar sesión'}
       </motion.button>
       <div className="flex py-2.5 text-[0.85rem] items-center justify-center space-x-1">
         <p>¿No tienes una cuenta?</p>

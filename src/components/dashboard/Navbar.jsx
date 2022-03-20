@@ -1,7 +1,9 @@
 import { Menu, Transition } from "@headlessui/react";
 import { BellIcon, LogoutIcon, PencilAltIcon, SearchIcon, UserCircleIcon } from "@heroicons/react/outline";
 import { Fragment, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { setIsLogged } from "../../redux/slices/auth/signInClientSlice";
 import { ModalSearch } from "./feed/search/ModalSearch";
 
 export const Navbar = () => {
@@ -10,6 +12,8 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   const [searchIsOpen, setSearchIsOpen] = useState(false);
+
+  const dispatch = useDispatch();
 
   const closeSearchModal = () => {
     setSearchIsOpen(false);
@@ -20,6 +24,9 @@ export const Navbar = () => {
   }
 
   const logout = () => {
+    dispatch(setIsLogged(false));
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
     navigate(`/signin/${location.pathname.split('/')[1]}`);
   }
 

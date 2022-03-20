@@ -15,6 +15,7 @@ import { Restaurant } from "../components/restaurant/Restaurant";
 import { Auth } from "../pages/Auth";
 import { LandingPage } from "../pages/LandingPage";
 import { NotFound } from "../pages/NotFound";
+import { PrivateRouteClient, PrivateRouteRestaurant } from "./PrivateRoutes";
 
 export const AppRouter = () => {
   return (
@@ -32,14 +33,22 @@ export const AppRouter = () => {
         <Route path="restaurante" element={<SignUpRestaurant/>}/>
       </Route>
       {/* Proteger las siguientes rutas */}
-      <Route path="/cliente" element={<Client/>} >
+      <Route path="/cliente" element={
+        <PrivateRouteClient>
+          <Client/>
+        </PrivateRouteClient>
+      } >
         <Route index element={<RedirectClient/>}/>
         <Route path="inicio" element={<HomeClient/>} >
           <Route index element={<Feed/>}/>
           <Route path="search" element={<Search/>}/>
         </Route>
       </Route>
-      <Route path="/restaurante" element={<Restaurant/>}>
+      <Route path="/restaurante" element={
+        <PrivateRouteRestaurant>
+          <Restaurant/>
+        </PrivateRouteRestaurant>
+      }>
         <Route index element={<RedirectRestaurant/>}/>
         <Route path="inicio" element={<HomeRestaurant/>} >
           <Route index element={<Feed/>}/>

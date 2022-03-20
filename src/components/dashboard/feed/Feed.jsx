@@ -4,7 +4,7 @@ import { Sidebar } from './sidebar/Sidebar';
 
 export const Feed = () => {
   return (
-    <div className="w-full bg-white flex relative max-w-8xl mx-auto">
+    <div className="w-full bg-white flex relative max-w-7xl mx-auto">
       <Sidebar/>
       <div className="max-w-full grow shrink">
         {/* <Stories/> */}
