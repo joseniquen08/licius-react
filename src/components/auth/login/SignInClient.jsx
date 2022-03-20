@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { emailNotFound, isSuccess, loadingLogin, passwordIsIncorrect, setEmailNotFound, setPasswordIsIncorrect, signInClientAsync } from '../../../redux/slices/auth/signInClientSlice';
+import { emailNotFound, isSuccess, loadingLogin, minLenPassword, passwordIsIncorrect, setEmailNotFound, setMinLengthPassword, setPasswordIsIncorrect, signInClientAsync } from '../../../redux/slices/auth/signInClientSlice';
+import { Spinner } from './Spinner';
 
 const variants = {
   true: {
@@ -27,6 +28,7 @@ export const SignInClient = () => {
   const [notEmail, setNotEmail] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
+  const [errorMinLenPassword, setErrorMinLenPassword] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -35,6 +37,7 @@ export const SignInClient = () => {
   const isLogged = useSelector(isSuccess) ?? false;
   const passwordIncorrect = useSelector(passwordIsIncorrect) ?? false;
   const invalidEmail = useSelector(emailNotFound) ?? false;
+  const minLengthPassword = useSelector(minLenPassword) ?? false;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,16 +57,19 @@ export const SignInClient = () => {
     setNotEmail(false);
     setErrorPassword(false);
     setUserNotFound(false);
+    setErrorMinLenPassword(false);
     dispatch(setPasswordIsIncorrect(false));
     dispatch(setEmailNotFound(false));
+    dispatch(setMinLengthPassword(false));
   }
 
   useEffect(() => {
     if (isLogged) navigate('/cliente/inicio');
     if (passwordIncorrect) setErrorPassword(true);
     if (invalidEmail) setUserNotFound(true);
+    if (minLengthPassword) setErrorMinLenPassword(true);
     // eslint-disable-next-line
-  }, [isLogged, passwordIncorrect, invalidEmail]);
+  }, [isLogged, passwordIncorrect, invalidEmail, minLengthPassword]);
 
   return (
     <form onSubmit={handleSubmit} className="px-4">
@@ -148,6 +154,9 @@ export const SignInClient = () => {
             </button>
           </div>
           {
+            errorMinLenPassword ? <p className="mt-1 text-sm font-medium text-red-500">Ingresa por lo menos 8 caracteres.</p> : <></>
+          }
+          {
             errorPassword ? <p className="mt-1 text-sm font-medium text-red-500">Contraseña incorrecta.</p> : <></>
           }
         </div>
@@ -156,11 +165,11 @@ export const SignInClient = () => {
         <Link to='/recovery' className="my-4 text-sm text-center underline decoration-transparent hover:decoration-current underline-offset-2">Olvidé mi contraseña</Link>
       </div>
       <motion.button
-        type="submit"
+        type={loading ? "button" : "submit"}
         whileHover={{ scale: 1.03 }}
         className="w-full px-4 py-2 text-sm font-medium tracking-wide text-white border border-transparent rounded-md bg-brand-green-500 focus:outline-none"
       >
-        {loading ? 'Loading' : 'Iniciar sesión'}
+        {loading ? <Spinner/> : 'Iniciar sesión'}
       </motion.button>
       <div className="flex py-2.5 text-[0.85rem] items-center justify-center space-x-1">
         <p>¿No tienes una cuenta?</p>

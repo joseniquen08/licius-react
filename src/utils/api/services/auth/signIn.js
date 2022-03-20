@@ -13,7 +13,11 @@ export const signInUser = async (user) => {
     if (response.ok){
       return data;
     } else {
-      return { ...data, success: false }
+      if (response.status === 401){
+        return { ...data, success: false }
+      } else if (response.status === 400) {
+        return { ...data, success: false, type: data.type }
+      }
     }
   } catch (error) {
     console.log(error);
