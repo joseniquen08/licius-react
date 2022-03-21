@@ -22,6 +22,9 @@ export const authSlice = createSlice({
     },
     setMinLengthPassword: (state, action) => {
       state.minLengthPassword = action.payload;
+    },
+    setInvalidEmail: (state, action) => {
+      state.invalidEmail = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -46,6 +49,8 @@ export const authSlice = createSlice({
           } else {
             if (action.payload.message === 'ValidationError: Min length is 8') {
               state.minLengthPassword = true;
+            } else if (action.payload.message === 'ValidationError: Invalid email.') {
+              state.invalidEmail = true;
             }
           }
         }
@@ -53,11 +58,12 @@ export const authSlice = createSlice({
   }
 });
 
-export const { setIsLogged, setPasswordIsIncorrect, setEmailNotFound, setMinLengthPassword } = authSlice.actions;
+export const { setIsLogged, setPasswordIsIncorrect, setEmailNotFound, setMinLengthPassword, setInvalidEmail } = authSlice.actions;
 export const loadingLogin = (state) => state.auth.loading;
 export const isSuccess = (state) => state.auth.isLogged;
 export const passwordIsIncorrect = (state) => state.auth.passwordIncorrect;
 export const emailNotFound = (state) => state.auth.emailNotFound;
 export const minLenPassword = (state) => state.auth.minLengthPassword;
+export const invalidEmail = (state) => state.auth.invalidEmail;
 
 export default authSlice.reducer;

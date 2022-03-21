@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FaRegBuilding } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { emailNotFound, isSuccess, loadingLogin, minLenPassword, passwordIsIncorrect, setEmailNotFound, setMinLengthPassword, setPasswordIsIncorrect, signInUserAsync } from '../../../redux/slices/auth/signInUserSlice';
+import { emailNotFound, invalidEmail, isSuccess, loadingLogin, minLenPassword, passwordIsIncorrect, setEmailNotFound, setInvalidEmail, setMinLengthPassword, setPasswordIsIncorrect, signInUserAsync } from '../../../redux/slices/auth/signInUserSlice';
 import { Spinner } from './Spinner';
 
 export const SignInRestaurant = () => {
@@ -29,6 +29,7 @@ export const SignInRestaurant = () => {
   const [userNotFound, setUserNotFound] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
   const [errorMinLenPassword, setErrorMinLenPassword] = useState(false);
+  const [errorInvalidEmail, setErrorInvalidEmail] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -36,8 +37,9 @@ export const SignInRestaurant = () => {
   const loading = useSelector(loadingLogin) ?? false;
   const isLogged = useSelector(isSuccess) ?? false;
   const passwordIncorrect = useSelector(passwordIsIncorrect) ?? false;
-  const invalidEmail = useSelector(emailNotFound) ?? false;
+  const emailNFound = useSelector(emailNotFound) ?? false;
   const minLengthPassword = useSelector(minLenPassword) ?? false;
+  const invEmail = useSelector(invalidEmail) ?? false;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,18 +60,21 @@ export const SignInRestaurant = () => {
     setErrorPassword(false);
     setUserNotFound(false);
     setErrorMinLenPassword(false);
+    setErrorInvalidEmail(false);
     dispatch(setPasswordIsIncorrect(false));
     dispatch(setEmailNotFound(false));
     dispatch(setMinLengthPassword(false));
+    dispatch(setInvalidEmail(false));
   }
 
   useEffect(() => {
     if (isLogged) navigate('/cliente/inicio');
     if (passwordIncorrect) setErrorPassword(true);
-    if (invalidEmail) setUserNotFound(true);
+    if (emailNFound) setUserNotFound(true);
     if (minLengthPassword) setErrorMinLenPassword(true);
+    if (invEmail) setErrorInvalidEmail(true);
     // eslint-disable-next-line
-  }, [isLogged, passwordIncorrect, invalidEmail, minLengthPassword]);
+  }, [isLogged, passwordIncorrect, emailNFound, minLengthPassword, invEmail]);
 
   return (
     <form onSubmit={handleSubmit} className="px-4">
@@ -84,7 +89,7 @@ export const SignInRestaurant = () => {
       </div>
       <p className="py-2 text-center text-[0.95rem]">¿Eres un cliente? Inicia sesión <Link to="/signin/cliente" className="font-bold text-brand-green-500">aquí</Link></p>
       <motion.div
-        animate={notEmail ? 'true' : userNotFound ? 'true' : errorPassword ? 'true' : 'false'}
+        animate={notEmail | userNotFound | errorPassword | errorMinLenPassword | errorInvalidEmail ? 'true' : 'false'}
         variants={variants}
         className="my-4 space-y-3"
       >
@@ -106,6 +111,9 @@ export const SignInRestaurant = () => {
               </span>
             </div>
           </div>
+          {
+            errorInvalidEmail ? <p className="mt-1 text-sm font-medium text-red-500">Correo inválido.</p> : <></>
+          }
           {
             notEmail ? <p className="mt-1 text-sm font-medium text-red-500">Ingresar un correo.</p> : <></>
           }
