@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { emailNotFound, isSuccess, loadingLogin, minLenPassword, passwordIsIncorrect, setEmailNotFound, setMinLengthPassword, setPasswordIsIncorrect, signInClientAsync } from '../../../redux/slices/auth/signInClientSlice';
+import { emailNotFound, isSuccess, loadingLogin, minLenPassword, passwordIsIncorrect, setEmailNotFound, setMinLengthPassword, setPasswordIsIncorrect, signInUserAsync } from '../../../redux/slices/auth/signInUserSlice';
 import { Spinner } from './Spinner';
 
 const variants = {
@@ -47,7 +47,7 @@ export const SignInClient = () => {
         password: passwordRef.current.value,
         role: 2
       }
-      dispatch(signInClientAsync(client));
+      dispatch(signInUserAsync(client));
     } else {
       setNotEmail(true);
     }

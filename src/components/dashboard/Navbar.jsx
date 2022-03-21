@@ -3,7 +3,7 @@ import { BellIcon, LogoutIcon, PencilAltIcon, SearchIcon, UserCircleIcon } from 
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { setIsLogged } from "../../redux/slices/auth/signInClientSlice";
+import { setIsLogged } from "../../redux/slices/auth/signInUserSlice";
 import { ModalSearch } from "./feed/search/ModalSearch";
 
 export const Navbar = () => {

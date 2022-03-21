@@ -3,8 +3,8 @@ import { signInUser } from "../../../utils/api/services/auth/signIn";
 
 const initialState = {};
 
-export const signInClientAsync = createAsyncThunk('signInClient', async (client) => {
-  return await signInUser(client);
+export const signInUserAsync = createAsyncThunk('signInUser', async (user) => {
+  return await signInUser(user);
 });
 
 export const authSlice = createSlice({
@@ -26,10 +26,10 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(signInClientAsync.pending, (state, action) => {
+      .addCase(signInUserAsync.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(signInClientAsync.fulfilled, (state, action) => {
+      .addCase(signInUserAsync.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload.success) {
           state.user = action.payload;
