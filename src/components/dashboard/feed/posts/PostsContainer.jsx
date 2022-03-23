@@ -26,7 +26,7 @@ export const PostsContainer = () => {
 
   return (
     <>
-      <Container className="posts__container w-full py-8 px-10 overflow-y-auto">
+      <Container className="posts__container w-full py-5 lg:py-8 md:px-6 lg:px-10 overflow-y-auto">
         <div className="max-w-[45rem] mx-auto flex flex-col space-y-4">
           <div className="border rounded-xl py-6 px-8 flex items-center space-x-3 w-full">
             <div className="h-10 w-10 rounded-full overflow-hidden grow-0 flex-none">

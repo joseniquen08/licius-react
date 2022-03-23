@@ -1,33 +1,77 @@
 import { EyeIcon, EyeOffIcon, IdentificationIcon, LockClosedIcon, MailIcon } from "@heroicons/react/outline";
-import axios from 'axios';
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { isSuccess, loadingSignUpClient, signUpClientAsync } from "../../../redux/slices/auth/signUpClientSlice";
+import { Spinner } from "../login/Spinner";
+
+const variants = {
+  true: {
+    x: [-8, 8, -8, 0],
+    transition: {
+      duration: 0.3,
+      type: 'spring'
+    }
+  },
+  false: {
+    x: 0
+  }
+}
 
 export const SignUpClient = () => {
 
+  const navigate = useNavigate();
+
   const [isShowing, setIsShowing] = useState(true);
+  const [notEmail, setNotEmail] = useState(false);
+
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  const dispatch = useDispatch();
+  const loading = useSelector(loadingSignUpClient) ?? false;
+  const isLogged = useSelector(isSuccess) ?? false;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:4000/user/create', {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-      first_name: firstNameRef.current.value,
-      last_name: lastNameRef.current.value,
-      role: 2
-    })
-      .then(data => {
-        if (data.success === true) {
-          console.log(data.token);
-        }
-      });
+    if (emailRef.current.value !== "") {
+      const client = {
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+        first_name: firstNameRef.current.value,
+        last_name: lastNameRef.current.value,
+        role: 2
+      }
+      dispatch(signUpClientAsync(client));
+    } else {
+      setNotEmail(true);
+    }
   }
+
+  const handleError = () => {
+    // dispatch(setPasswordIsIncorrect(false));
+    // dispatch(setEmailNotFound(false));
+    // dispatch(setMinLengthPassword(false));
+    // dispatch(setInvalidEmail(false));
+  }
+
+  const handleChange = () => {
+    setNotEmail(false);
+    // setUserNotFound(false);
+    // setErrorPassword(false);
+    // setErrorMinLenPassword(false);
+    // setErrorInvalidEmail(false);
+    handleError();
+  }
+
+  useEffect(() => {
+    if (isLogged) navigate('/cliente/inicio');
+    // eslint-disable-next-line
+  }, [isLogged]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -41,10 +85,14 @@ export const SignUpClient = () => {
         </div>
       </div>
       <p className="py-2 text-center text-[0.95rem]">¿Eres una empresa? Regístrate <Link to="/signup/restaurante" className="font-bold text-brand-green-500">aquí</Link></p>
-      <div className="w-full mx-auto mt-3 mb-2 space-y-2">
+      <motion.div
+        animate={notEmail ? 'true' : 'false'}
+        variants={variants}
+        className="w-full mx-auto mt-3 mb-2 space-y-2"
+      >
         <div>
           <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
-            First name
+            Nombres
           </label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
@@ -52,6 +100,7 @@ export const SignUpClient = () => {
               name="first_name"
               id="first_name"
               ref={firstNameRef}
+              onChange={handleChange}
               className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer focus:ring-2 focus:ring-brand-green-500/50 focus:text-gray-700 focus:border-transparent focus:outline-none border-slate-300 valid:border-green-500"
               required
             />
@@ -64,7 +113,7 @@ export const SignUpClient = () => {
         </div>
         <div>
           <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
-            Last name
+            Apellidos
           </label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
@@ -72,6 +121,7 @@ export const SignUpClient = () => {
               name="last_name"
               id="last_name"
               ref={lastNameRef}
+              onChange={handleChange}
               className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer focus:text-gray-700 focus:ring-2 focus:ring-brand-green-500/50 focus:border-transparent focus:outline-none border-slate-300 valid:border-green-500"
               required
             />
@@ -92,6 +142,7 @@ export const SignUpClient = () => {
               name="email"
               id="email"
               ref={emailRef}
+              onChange={handleChange}
               className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer invalid:border-red-600 focus:text-gray-700 invalid:text-red-600 invalid:focus:ring-red-400 focus:ring-2 focus:ring-brand-green-500/50 focus:border-transparent focus:outline-none border-slate-300"
             />
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-auto peer-focus:text-brand-green-500 peer-invalid:peer-focus:text-red-600">
@@ -100,10 +151,13 @@ export const SignUpClient = () => {
               </span>
             </div>
           </div>
+          {
+            notEmail ? <p className="mt-1 text-sm font-medium text-red-500">Ingresar un correo.</p> : <></>
+          }
         </div>
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Password
+            Contraseña
           </label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
@@ -140,17 +194,17 @@ export const SignUpClient = () => {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
       <div className="flex items-start justify-start w-full mt-5 mb-3 space-x-1.5">
         <input type="checkbox" id="tyc" required className="text-sm flex-none mt-0.5 text-center accent-brand-blue-900" />
         <label htmlFor="tyc" className="text-[0.7rem]">Acepto las Condiciones de Uso y Política de privacidad</label>
       </div>
       <motion.button
-        type="submit"
+        type={loading ? "button" : "submit"}
         whileHover={{ scale: 1.03 }}
         className="w-full px-4 py-2 text-sm font-medium tracking-wide text-white border border-transparent rounded-md bg-brand-green-500/90 focus:outline-none"
       >
-        Registrarme
+        {loading ? <Spinner/> : 'Registrarme'}
       </motion.button>
       <div className="flex py-2.5 text-[0.85rem] items-center justify-center space-x-1">
         <p>¿Ya estás registrado?</p>

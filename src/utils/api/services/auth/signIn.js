@@ -10,14 +10,10 @@ export const signInUser = async (user) => {
       },
     });
     const data = await response.json();
-    if (response.ok){
-      return data;
-    } else {
-      if (response.status === 401){
-        return { ...data, success: false }
-      } else if (response.status === 400) {
-        return { ...data, success: false, type: data.type }
-      }
+    if (response.ok) return data;
+    else {
+      if (response.status === 401) return { ...data, success: false };
+      else if (response.status === 400) return { ...data, success: false, type: data.type };
     }
   } catch (error) {
     console.log(error);

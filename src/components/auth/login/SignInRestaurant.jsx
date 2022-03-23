@@ -55,16 +55,20 @@ export const SignInRestaurant = () => {
     }
   }
 
+  const handleError = () => {
+    dispatch(setPasswordIsIncorrect(false));
+    dispatch(setEmailNotFound(false));
+    dispatch(setMinLengthPassword(false));
+    dispatch(setInvalidEmail(false));
+  }
+
   const handleChange = () => {
     setNotEmail(false);
     setErrorPassword(false);
     setUserNotFound(false);
     setErrorMinLenPassword(false);
     setErrorInvalidEmail(false);
-    dispatch(setPasswordIsIncorrect(false));
-    dispatch(setEmailNotFound(false));
-    dispatch(setMinLengthPassword(false));
-    dispatch(setInvalidEmail(false));
+    handleError();
   }
 
   useEffect(() => {
@@ -87,7 +91,7 @@ export const SignInRestaurant = () => {
           </div>
         </div>
       </div>
-      <p className="py-2 text-center text-[0.95rem]">¿Eres un cliente? Inicia sesión <Link to="/signin/cliente" className="font-bold text-brand-green-500">aquí</Link></p>
+      <p className="py-2 text-center text-[0.95rem]">¿Eres un cliente? Inicia sesión <Link to="/signin/cliente" onClick={() => handleError()} className="font-bold text-brand-green-500">aquí</Link></p>
       <motion.div
         animate={notEmail | userNotFound | errorPassword | errorMinLenPassword | errorInvalidEmail ? 'true' : 'false'}
         variants={variants}
@@ -179,7 +183,7 @@ export const SignInRestaurant = () => {
       </motion.button>
       <div className="flex py-2.5 text-[0.85rem] items-center justify-center space-x-1">
         <p>¿No tienes una cuenta?</p>
-        <p>Regístrate <Link to="/signup/restaurante" className="font-bold text-brand-green-500">aquí</Link></p>
+        <p>Regístrate <Link to="/signup/restaurante" onClick={() => handleError()} className="font-bold text-brand-green-500">aquí</Link></p>
       </div>
     </form>
   )

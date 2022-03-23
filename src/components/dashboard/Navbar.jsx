@@ -3,13 +3,19 @@ import { BellIcon, LogoutIcon, PencilAltIcon, SearchIcon, UserCircleIcon } from 
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { setIsLogged } from "../../redux/slices/auth/signInUserSlice";
+import { setIsLogged as setIsLoggedLogin } from "../../redux/slices/auth/signInUserSlice";
+import { setIsLogged as setIsLoggedRegisterClient } from "../../redux/slices/auth/signUpClientSlice";
+import decodeToken from "../../utils/jwt/decode";
 import { ModalSearch } from "./feed/search/ModalSearch";
 
 export const Navbar = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  const decryptedToken = decodeToken(localStorage.getItem("token"));
+  const role = decryptedToken.role;
+  const name = role === 2 ? decryptedToken.user.profile.first_name : decryptedToken.user.profile.nombre_comercial;
 
   const [searchIsOpen, setSearchIsOpen] = useState(false);
 
@@ -24,7 +30,8 @@ export const Navbar = () => {
   }
 
   const logout = () => {
-    dispatch(setIsLogged(false));
+    dispatch(setIsLoggedLogin(false));
+    dispatch(setIsLoggedRegisterClient(false));
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
     navigate(`/signin/${location.pathname.split('/')[1]}`);
@@ -49,15 +56,16 @@ export const Navbar = () => {
                   </div>
                 </div>
               </div>
-              <div className="relative z-10 inline-flex items-center space-x-4 md:ml-5 lg:justify-end">
+              <div className="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end">
                 <button type="button" className="p-1 text-gray-200 rounded-full hover:text-white focus:outline-none">
-                  <BellIcon className="w-6 h-6" />
+                  <BellIcon className="w-5 h-5" />
                 </button>
-                <div className="relative w-8 h-8 ml-3">
+                <div className="relative ml-3 border px-2 py-1.5 rounded-md border-white/40">
                   <Menu as="div" className="relative inline-block text-left">
-                    <div className="">
-                      <Menu.Button className="inline-flex justify-center w-8 h-8 text-sm font-medium text-white rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                        <img className="w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                    <div className="flex items-center justify-center space-x-2">
+                      <p className="flex-none text-white text-sm">{name}</p>
+                      <Menu.Button className="justify-center w-6 h-6 text-sm font-medium text-white rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                        <img className="w-6 h-6 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
                       </Menu.Button>
                     </div>
                     <Transition

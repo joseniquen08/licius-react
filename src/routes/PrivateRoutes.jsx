@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
 import decodeToken from "../utils/jwt/decode";
 
-
 export const PrivateRouteClient = ({ children }) => {
 
   const token = localStorage.getItem('token');

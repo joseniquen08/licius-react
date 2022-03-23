@@ -7,12 +7,14 @@ import AuthProvider from './redux/providers/authProvider';
 import './styles/index.css';
 
 ReactDOM.render(
-  // <RootProvider>
+  <React.StrictMode>
+  {/* <RootProvider> */}
     <AuthProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </AuthProvider>,
-  // </RootProvider>,
+    </AuthProvider>
+  {/* </RootProvider> */}
+  </React.StrictMode>,
   document.getElementById('root')
 );

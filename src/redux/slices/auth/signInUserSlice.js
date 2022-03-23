@@ -7,8 +7,8 @@ export const signInUserAsync = createAsyncThunk('signInUser', async (user) => {
   return await signInUser(user);
 });
 
-export const authSlice = createSlice({
-  name: 'auth',
+export const signInUserSlice = createSlice({
+  name: 'signInUser',
   initialState,
   reducers: {
     setIsLogged: (state, action) => {
@@ -58,12 +58,12 @@ export const authSlice = createSlice({
   }
 });
 
-export const { setIsLogged, setPasswordIsIncorrect, setEmailNotFound, setMinLengthPassword, setInvalidEmail } = authSlice.actions;
-export const loadingLogin = (state) => state.auth.loading;
-export const isSuccess = (state) => state.auth.isLogged;
-export const passwordIsIncorrect = (state) => state.auth.passwordIncorrect;
-export const emailNotFound = (state) => state.auth.emailNotFound;
-export const minLenPassword = (state) => state.auth.minLengthPassword;
-export const invalidEmail = (state) => state.auth.invalidEmail;
+export const { setIsLogged, setPasswordIsIncorrect, setEmailNotFound, setMinLengthPassword, setInvalidEmail } = signInUserSlice.actions;
+export const loadingLogin = (state) => state.signInUser.loading;
+export const isSuccess = (state) => state.signInUser.isLogged;
+export const passwordIsIncorrect = (state) => state.signInUser.passwordIncorrect;
+export const emailNotFound = (state) => state.signInUser.emailNotFound;
+export const minLenPassword = (state) => state.signInUser.minLengthPassword;
+export const invalidEmail = (state) => state.signInUser.invalidEmail;
 
-export default authSlice.reducer;
+export default signInUserSlice.reducer;
