@@ -7,6 +7,7 @@ import { Client } from "../components/client/Client";
 import { HomeClient } from "../components/client/HomeClient";
 import { RedirectClient } from "../components/client/RedirectClient";
 import { Feed } from "../components/dashboard/feed/Feed";
+import { CheckoutPost } from "../components/dashboard/feed/posts/checkout/CheckoutPost";
 import { Search } from "../components/dashboard/feed/search/Search";
 import { Home } from "../components/landing/Home";
 import { HomeRestaurant } from "../components/restaurant/HomeRestaurant";
@@ -15,6 +16,8 @@ import { Restaurant } from "../components/restaurant/Restaurant";
 import { Auth } from "../pages/Auth";
 import { LandingPage } from "../pages/LandingPage";
 import { NotFound } from "../pages/NotFound";
+import CheckoutProvider from '../redux/providers/CheckoutProvider';
+import PostProvider from "../redux/providers/PostProvider";
 import { PrivateRouteClient, PrivateRouteRestaurant } from "./PrivateRoutes";
 
 export const AppRouter = () => {
@@ -32,11 +35,13 @@ export const AppRouter = () => {
         <Route path="cliente" element={<SignUpClient/>}/>
         <Route path="restaurante" element={<SignUpRestaurant/>}/>
       </Route>
-      {/* Proteger las siguientes rutas */}
+      {/* Cliente */}
       <Route path="/cliente" element={
-        <PrivateRouteClient>
-          <Client/>
-        </PrivateRouteClient>
+        <PostProvider>
+          <PrivateRouteClient>
+            <Client/>
+          </PrivateRouteClient>
+        </PostProvider>
       } >
         <Route index element={<RedirectClient/>}/>
         <Route path="inicio" element={<HomeClient/>} >
@@ -44,14 +49,20 @@ export const AppRouter = () => {
           <Route path="search" element={<Search/>}/>
         </Route>
       </Route>
+      {/* Restaurante */}
       <Route path="/restaurante" element={
-        <PrivateRouteRestaurant>
-          <Restaurant/>
-        </PrivateRouteRestaurant>
+        <PostProvider>
+          <CheckoutProvider>
+            <PrivateRouteRestaurant>
+              <Restaurant/>
+            </PrivateRouteRestaurant>
+          </CheckoutProvider>
+        </PostProvider>
       }>
         <Route index element={<RedirectRestaurant/>}/>
         <Route path="inicio" element={<HomeRestaurant/>} >
           <Route index element={<Feed/>}/>
+          <Route path="checkout" element={<CheckoutPost/>}/>
           <Route path="search" element={<Search/>}/>
         </Route>
       </Route>

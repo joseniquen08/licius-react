@@ -48,3 +48,7 @@ input[type=number] {
     font-weight: bold;
     margin-top: 20px;
 }
+
+.react-datepicker__day--selected {
+    background-color: #1E6C5B;
+}
