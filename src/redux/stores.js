@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import signInUserReducer from './slices/auth/signInUserSlice';
-import signUpClientReducer from './slices/auth/signUpClientSlice';
+import signUpUserReducer from './slices/auth/signUpUserSlice';
 
 // export const rootStore = configureStore({
 //   reducer: {}
@@ -9,6 +9,6 @@ import signUpClientReducer from './slices/auth/signUpClientSlice';
 export const authStore = configureStore({
   reducer: {
     signInUser: signInUserReducer,
-    signUpClient: signUpClientReducer
+    signUpUser: signUpUserReducer
   }
 });

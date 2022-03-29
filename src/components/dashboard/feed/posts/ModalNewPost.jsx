@@ -1,8 +1,28 @@
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Switch, Transition } from "@headlessui/react";
 import { EmojiHappyIcon, PhotographIcon, XIcon } from "@heroicons/react/outline";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import { HiOutlineSpeakerphone } from "react-icons/hi";
+
+const changeDate = (date, days) => {
+  let newDate = date;
+  newDate.setDate(date.getDate() + days);
+  return newDate;
+}
 
 export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
+
+  const today = new Date();
+  const [startDate, setStartDate] = useState(changeDate(today, 3));
+  const [totalDays, setTotalDays] = useState(3);
+  const [isPromoted, setIsPromoted] = useState(false);
+
+  const handleDate = (date) => {
+    setStartDate(date);
+    setTotalDays();
+  }
+
   return (
     <Transition appear show={postIsOpen} as={Fragment}>
       <Dialog
@@ -64,6 +84,51 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
                   </button>
                 </div>
               </div>
+              <div className="py-3 flex items-center justify-between w-full">
+                <p className="flex items-center space-x-1.5 text-stone-700"><span><HiOutlineSpeakerphone className="h-5 w-5"/></span><span className="font-medium">Potencia tu alcance</span></p>
+                <div>
+                  <Switch
+                    checked={isPromoted}
+                    onChange={setIsPromoted}
+                    className={`${isPromoted ? 'bg-brand-green-500' : 'bg-gray-200'}
+                      relative inline-flex flex-shrink-0 h-7 w-12 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`${isPromoted ? 'translate-x-5' : 'translate-x-0'}
+                        pointer-events-none inline-block h-6 w-6 rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
+                    />
+                  </Switch>
+                </div>
+              </div>
+              {
+                isPromoted && (
+                  <div className="text-stone-700 space-y-2 border font-medium border-gray-300 rounded-lg px-5 py-3.5">
+                    <p className="font-bold">Ajustes de la promoción</p>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p>Fecha fin</p>
+                        <p className="text-xs">Días totales: {totalDays}</p>
+                      </div>
+                      <div className="flex items-center justify-center">
+                        <DatePicker
+                          selected={startDate}
+                          onChange={(date) => handleDate(date)}
+                          dateFormat="dd/MM/yyyy"
+                          minDate={new Date()}
+                          customInput={<input className="bg-transparent border border-gray-300 py-1 text-center w-auto text-slate-800 font-inter font-medium rounded-md focus:outline-none text-[0.9rem]" type="text"/>}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p>Presupuesto estimado</p>
+                        <p className="text-xs">Monto diario: S/. 10.00</p>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
               <div className="py-4 flex item-center justify-center">
                 <button
                   type="button"

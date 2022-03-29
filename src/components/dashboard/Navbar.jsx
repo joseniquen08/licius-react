@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { setIsLogged as setIsLoggedLogin } from "../../redux/slices/auth/signInUserSlice";
-import { setIsLogged as setIsLoggedRegisterClient } from "../../redux/slices/auth/signUpClientSlice";
+import { setIsLogged as setIsLoggedRegisterUser } from "../../redux/slices/auth/signUpUserSlice";
 import decodeToken from "../../utils/jwt/decode";
 import { ModalSearch } from "./feed/search/ModalSearch";
 
@@ -31,7 +31,7 @@ export const Navbar = () => {
 
   const logout = () => {
     dispatch(setIsLoggedLogin(false));
-    dispatch(setIsLoggedRegisterClient(false));
+    dispatch(setIsLoggedRegisterUser(false));
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
     navigate(`/signin/${location.pathname.split('/')[1]}`);

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { isSuccess, loadingSignUpClient, signUpClientAsync } from "../../../redux/slices/auth/signUpClientSlice";
+import { isSuccess, loadingSignUpUser, signUpClientAsync } from "../../../redux/slices/auth/signUpUserSlice";
 import { Spinner } from "../login/Spinner";
 
 const variants = {
@@ -33,7 +33,7 @@ export const SignUpClient = () => {
   const passwordRef = useRef();
 
   const dispatch = useDispatch();
-  const loading = useSelector(loadingSignUpClient) ?? false;
+  const loading = useSelector(loadingSignUpUser) ?? false;
   const isLogged = useSelector(isSuccess) ?? false;
 
   const handleSubmit = (e) => {

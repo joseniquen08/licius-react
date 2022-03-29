@@ -1,10 +1,11 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, EyeIcon, EyeOffIcon, FingerPrintIcon, IdentificationIcon, LockClosedIcon, MailIcon, MenuAlt1Icon, OfficeBuildingIcon, SelectorIcon } from "@heroicons/react/outline";
-import axios from "axios";
 import { motion } from "framer-motion";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { FaRegBuilding } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { isSuccess, signUpRestaurantAsync } from "../../../redux/slices/auth/signUpUserSlice";
 
 const people = [
   { name: 'Opción 1', id: 1 },
@@ -18,6 +19,10 @@ export const SignUpRestaurant = () => {
 
   const [selected, setSelected] = useState(people[0]);
   const [isShowing, setIsShowing] = useState(true);
+  const [notEmail, setNotEmail] = useState(false);
+
+  const isLogged = useSelector(isSuccess) ?? false;
+
   const businessNameRef = useRef();
   const rucRef = useRef();
   const trnameRef = useRef();
@@ -25,23 +30,48 @@ export const SignUpRestaurant = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:4000/user/create', {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-      category_id: selected.id,
-      razon_social: businessNameRef.current.value,
-      ruc: rucRef.current.value,
-      nombre_comercial: trnameRef.current.value,
-      description: descriptionRef.current.value,
-      role: 3
-    }).then(data => {
-        if (data.success === true) {
-          console.log(data.token);
-        }
-      });
+    if (emailRef.current.value !== "") {
+      const restaurant = {
+        razon_social: businessNameRef.current.value,
+        ruc: rucRef.current.value,
+        nombre_comercial: trnameRef.current.value,
+        description: descriptionRef.current.value,
+        category_id: selected.id,
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+        role: 3
+      }
+      dispatch(signUpRestaurantAsync(restaurant));
+    } else {
+      setNotEmail(true);
+    }
   }
+
+  const handleError = () => {
+    // dispatch(setPasswordIsIncorrect(false));
+    // dispatch(setEmailNotFound(false));
+    // dispatch(setMinLengthPassword(false));
+    // dispatch(setInvalidEmail(false));
+  }
+
+  const handleChange = () => {
+    setNotEmail(false);
+    // setUserNotFound(false);
+    // setErrorPassword(false);
+    // setErrorMinLenPassword(false);
+    // setErrorInvalidEmail(false);
+    handleError();
+  }
+
+  useEffect(() => {
+    if (isLogged) navigate('/restaurante/inicio');
+    // eslint-disable-next-line
+  }, [isLogged]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -64,6 +94,7 @@ export const SignUpRestaurant = () => {
             <input
               type="text"
               name="business_name"
+              onChange={handleChange}
               ref={businessNameRef}
               id="business_name"
               className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md focus:ring-2 peer focus:text-gray-700 focus:ring-brand-green-500/50 focus:border-transparent focus:outline-none border-slate-300 valid:border-green-500"
@@ -84,6 +115,7 @@ export const SignUpRestaurant = () => {
             <input
               type="number"
               name="ruc"
+              onChange={handleChange}
               ref={rucRef}
               id="ruc"
               className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer focus:text-gray-700 focus:ring-2 focus:ring-brand-green-500/50 focus:border-transparent focus:outline-none border-slate-300 valid:border-green-500"
@@ -104,6 +136,7 @@ export const SignUpRestaurant = () => {
             <input
               type="text"
               name="tradename"
+              onChange={handleChange}
               ref={trnameRef}
               id="tradename"
               className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer focus:text-gray-700 focus:ring-2 focus:ring-brand-green-500/50 focus:border-transparent focus:outline-none border-slate-300 valid:border-green-500"
@@ -124,6 +157,7 @@ export const SignUpRestaurant = () => {
             <textarea
               type="text"
               name="description"
+              onChange={handleChange}
               ref={descriptionRef}
               id="description"
               className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md resize-none peer focus:text-gray-700 focus:ring-2 focus:ring-brand-green-500/50 focus:border-transparent focus:outline-none border-slate-300 valid:border-green-500"
@@ -204,6 +238,7 @@ export const SignUpRestaurant = () => {
             <input
               type="email"
               name="email"
+              onChange={handleChange}
               ref={emailRef}
               className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer focus:text-gray-700 invalid:border-red-600 invalid:text-red-600 invalid:focus:ring-red-100 focus:ring-2 focus:ring-brand-green-500/50 focus:border-transparent focus:outline-none border-slate-300"
             />
@@ -213,6 +248,9 @@ export const SignUpRestaurant = () => {
               </span>
             </div>
           </div>
+          {
+            notEmail ? <p className="mt-1 text-sm font-medium text-red-500">Ingresar un correo.</p> : <></>
+          }
         </div>
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -222,6 +260,7 @@ export const SignUpRestaurant = () => {
             <input
               type={isShowing ? 'password' : 'text'}
               name="password"
+              onChange={handleChange}
               ref={passwordRef}
               required
               className="block w-full py-2 pl-10 pr-3 text-sm text-gray-600 border rounded-md peer md:font-medium focus:ring-2 focus:ring-brand-green-500/50 focus:border-transparent focus:outline-none border-slate-300"
