@@ -18,11 +18,6 @@ export const authStore = configureStore({
 export const postStore = configureStore({
   reducer: {
     post: postReducer,
-  }
-});
-
-export const checkoutStore = configureStore({
-  reducer: {
     checkout: checkoutReducer,
   }
 });

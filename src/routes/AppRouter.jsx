@@ -16,7 +16,6 @@ import { Restaurant } from "../components/restaurant/Restaurant";
 import { Auth } from "../pages/Auth";
 import { LandingPage } from "../pages/LandingPage";
 import { NotFound } from "../pages/NotFound";
-import CheckoutProvider from '../redux/providers/CheckoutProvider';
 import PostProvider from "../redux/providers/PostProvider";
 import { PrivateRouteClient, PrivateRouteRestaurant } from "./PrivateRoutes";
 
@@ -52,11 +51,9 @@ export const AppRouter = () => {
       {/* Restaurante */}
       <Route path="/restaurante" element={
         <PostProvider>
-          <CheckoutProvider>
-            <PrivateRouteRestaurant>
-              <Restaurant/>
-            </PrivateRouteRestaurant>
-          </CheckoutProvider>
+          <PrivateRouteRestaurant>
+            <Restaurant/>
+          </PrivateRouteRestaurant>
         </PostProvider>
       }>
         <Route index element={<RedirectRestaurant/>}/>

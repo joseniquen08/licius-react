@@ -8,6 +8,7 @@ import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { contentP, setContentPost } from "../../../../redux/slices/post/checkout/checkoutSlice";
+import { contentNP, setContentNewPost } from "../../../../redux/slices/post/postSlice";
 import decodeToken from "../../../../utils/jwt/decode";
 
 export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
@@ -25,6 +26,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const contentPost = useSelector(contentP) ?? "";
+  const contentNewPost = useSelector(contentNP) ?? "";
 
   const handleDate = (date) => {
     const now = new Date();
@@ -40,6 +42,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
   const handlePost = () => {
     if (postContentRef.current.value !== ""){
       dispatch(setContentPost(postContentRef.current.value));
+      dispatch(setContentNewPost(postContentRef.current.value));
       if (isPromoted) {
         navigate('/restaurante/inicio/checkout');
       }
@@ -59,7 +62,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
 
   useEffect(() => {
 
-  }, [contentPost]);
+  }, [contentPost, contentNewPost]);
 
   return (
     <Transition appear show={postIsOpen} as={Fragment}>
