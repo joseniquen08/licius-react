@@ -126,7 +126,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
                   rows={4}
                   ref={postContentRef}
                   onChange={handleChange}
-                  className={`placeholder:font-inter font-inter placeholder:text-sm text-sm block w-full focus:outline-none px-4 py-2 border rounded-lg resize-none ${errorPostContent ? 'border-red-500' : 'border-slate-300'}`}
+                  className={`placeholder:font-inter font-inter placeholder:text-sm text-sm block w-full focus:outline-none focus:border-slate-300 focus:ring-0 px-4 py-2 border rounded-lg resize-none ${errorPostContent ? 'border-red-500' : 'border-slate-300'}`}
                 />
                 {
                   errorPostContent && <p className="text-red-500 text-sm">Debes agregar un texto al post.</p>
@@ -200,7 +200,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
               <div className="py-4 flex item-center justify-center">
                 <button
                   type="button"
-                  className="inline-flex justify-center font-inter px-5 py-2 text-base font-semibold text-white bg-brand-blue-700 border border-transparent rounded-full hover:bg-brand-blue-900 focus:outline-none"
+                  className="inline-flex justify-center font-inter px-5 py-2 text-base font-semibold text-white bg-brand-green-500 border border-transparent rounded-full hover:bg-brand-green-700 focus:outline-none"
                   onClick={handlePost}
                 >
                   {isPromoted ? 'Continuar' : 'Publicar'}

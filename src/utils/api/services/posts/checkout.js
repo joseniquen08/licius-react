@@ -15,3 +15,5 @@ export const createPreference = async (orderData) => {
     console.log(error);
   }
 }
+
+export const savePaymentResponse = async (paymentResponse) => {}

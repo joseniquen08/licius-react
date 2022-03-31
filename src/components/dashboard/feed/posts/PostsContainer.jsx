@@ -1,13 +1,17 @@
 
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from 'styled-components';
+import { statusPayment } from "../../../../redux/slices/post/checkout/checkoutSlice";
 import { ModalNewPost } from "./ModalNewPost";
 import { PostCard } from "./PostCard";
+import { ToastPublishedPost } from "./ToastPublishedPost";
 
 export const PostsContainer = () => {
 
   const [users, setUsers] = useState([]);
   const [postIsOpen, setPostIsOpen] = useState(false);
+  const status_payment = useSelector(statusPayment) ?? false;
 
   const closePostModal = () => {
     setPostIsOpen(false);
@@ -18,7 +22,7 @@ export const PostsContainer = () => {
   }
 
   useEffect(() => {
-    fetch('https://randomuser.me/api/?results=20')
+    fetch('https://randomuser.me/api/?results=10')
     .then(response => response.json())
     .then(data => setUsers(data.results))
     .catch(error => console.log(error));
@@ -48,6 +52,9 @@ export const PostsContainer = () => {
         </div>
       </Container>
       <ModalNewPost postIsOpen={postIsOpen} closePostModal={closePostModal}/>
+      {
+        status_payment && <ToastPublishedPost />
+      }
     </>
   )
 }

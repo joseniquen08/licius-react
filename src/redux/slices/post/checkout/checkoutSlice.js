@@ -27,9 +27,7 @@ export const checkoutSlice = createSlice({
       state.finalTime = action.payload;
     },
     setResponsePaymentSuccessAction: (state, action) => {
-      state.payment_id = action.payload.payment_id;
-      state.merchant_order_id = action.payload.merchant_order_id;
-      state.status_payment = action.payload.status;
+      state.status_payment = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -47,8 +45,6 @@ export const finalD = (state) => state.checkout.finalDate;
 export const totalP = (state) => state.checkout.totalPrice;
 export const finalT = (state) => state.checkout.finalTime;
 export const preferenceId = (state) => state.checkout.preference_id;
-export const paymentId = (state) => state.checkout.payment_id;
-export const merchantOrderId = (state) => state.checkout.merchant_order_id;
 export const statusPayment = (state) => state.checkout.status_payment;
 
 export default checkoutSlice.reducer;
