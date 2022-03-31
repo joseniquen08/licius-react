@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { contentP, setContentPost } from "../../../../redux/slices/post/checkout/checkoutSlice";
+import { contentP, createPreferenceAsync, setContentPostAction, setFinalDateAction, setFinalTimeAction, setTotalDaysAction, setTotalPriceAction } from "../../../../redux/slices/post/checkout/checkoutSlice";
 import { contentNP, setContentNewPost } from "../../../../redux/slices/post/postSlice";
 import decodeToken from "../../../../utils/jwt/decode";
 
@@ -41,10 +41,20 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
 
   const handlePost = () => {
     if (postContentRef.current.value !== ""){
-      dispatch(setContentPost(postContentRef.current.value));
       dispatch(setContentNewPost(postContentRef.current.value));
       if (isPromoted) {
-        navigate('/restaurante/inicio/checkout');
+        const orderData = {
+          title: 'Titulo de prueba',
+          unit_price: 10,
+          quantity: totalDays,
+        }
+        dispatch(setContentPostAction(postContentRef.current.value));
+        dispatch(setTotalDaysAction(totalDays));
+        dispatch(setFinalDateAction(moment(startDate).format('L')));
+        dispatch(setFinalTimeAction(moment(startDate).format('LT')));
+        dispatch(setTotalPriceAction(totalPrice));
+        dispatch(createPreferenceAsync(orderData));
+        navigate('/restaurante/post/checkout');
       }
     } else {
       setErrorPostContent(true);
@@ -116,14 +126,14 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
                   rows={4}
                   ref={postContentRef}
                   onChange={handleChange}
-                  className={`placeholder:font-inter placeholder:text-sm text-sm block w-full focus:outline-none px-4 py-2 border rounded-lg resize-none ${errorPostContent ? 'border-red-500' : 'border-slate-300'}`}
+                  className={`placeholder:font-inter font-inter placeholder:text-sm text-sm block w-full focus:outline-none px-4 py-2 border rounded-lg resize-none ${errorPostContent ? 'border-red-500' : 'border-slate-300'}`}
                 />
                 {
                   errorPostContent && <p className="text-red-500 text-sm">Debes agregar un texto al post.</p>
                 }
               </div>
               <div className="border px-4 py-1 border-slate-300 rounded-lg flex items-center justify-between">
-                <p className="text-slate-800 text-sm font-inter py-2">Añade a tu post...</p>
+                <p className="text-slate-800 font-inter py-2">Añade a tu post...</p>
                 <div className="flex">
                   <button type="button" className="hover:bg-slate-100 rounded-full p-1.5 focus:outline-none">
                     <PhotographIcon className="h-5 w-5" />
@@ -137,7 +147,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
                 role === 3 && (
                   <>
                     <div className="py-3 flex items-center justify-between w-full">
-                      <p className="flex items-center space-x-1.5 text-stone-700"><span><HiOutlineSpeakerphone className="h-5 w-5"/></span><span className="font-medium">Potencia tu alcance</span></p>
+                      <p className="flex items-center space-x-1.5 text-stone-700"><span><HiOutlineSpeakerphone className="h-5 w-5"/></span><span className="font-medium font-inter">Potencia tu alcance</span></p>
                       <div>
                         <Switch
                           checked={isPromoted}

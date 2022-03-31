@@ -8,6 +8,8 @@ import { HomeClient } from "../components/client/HomeClient";
 import { RedirectClient } from "../components/client/RedirectClient";
 import { Feed } from "../components/dashboard/feed/Feed";
 import { CheckoutPost } from "../components/dashboard/feed/posts/checkout/CheckoutPost";
+import { CheckoutPostRedirect } from "../components/dashboard/feed/posts/checkout/CheckoutPostRedirect";
+import { CheckoutPostSuccess } from "../components/dashboard/feed/posts/checkout/CheckoutPostSuccess";
 import { Search } from "../components/dashboard/feed/search/Search";
 import { Home } from "../components/landing/Home";
 import { HomeRestaurant } from "../components/restaurant/HomeRestaurant";
@@ -59,8 +61,12 @@ export const AppRouter = () => {
         <Route index element={<RedirectRestaurant/>}/>
         <Route path="inicio" element={<HomeRestaurant/>} >
           <Route index element={<Feed/>}/>
-          <Route path="checkout" element={<CheckoutPost/>}/>
           <Route path="search" element={<Search/>}/>
+        </Route>
+        <Route path="post" element={<HomeRestaurant/>}>
+          <Route path="checkout" element={<CheckoutPost/>}/>
+          <Route path="checkout/redirect" element={<CheckoutPostRedirect/>}/>
+          <Route path="checkout/success" element={<CheckoutPostSuccess/>}/>
         </Route>
       </Route>
       <Route path="*" element={<NotFound/>}/>

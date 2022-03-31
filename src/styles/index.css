@@ -52,3 +52,8 @@ input[type=number] {
 .react-datepicker__day--selected {
     background-color: #1E6C5B;
 }
+
+.mercadopago-button {
+    background-color: #1E6C5B !important;
+    width: 100%;
+}
