@@ -1,4 +1,4 @@
-export const URI_SERVER = 'http://localhost:4000';
+export const URI_SERVER = `${process.env.REACT_APP_URI_SERVER}`;
 
 export const ENDPOINTS = {
   SIGNIN: '/user/signin',
