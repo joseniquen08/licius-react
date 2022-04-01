@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FaRegBuilding } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { emailNotFound, invalidEmail, isSuccess, loadingLogin, minLenPassword, passwordIsIncorrect, setEmailNotFound, setInvalidEmail, setMinLengthPassword, setPasswordIsIncorrect, signInUserAsync } from '../../../redux/slices/auth/signInUserSlice';
+import { emailNotFound, invalidEmail, loadingLogin, minLenPassword, passwordIsIncorrect, setEmailNotFound, setInvalidEmail, setMinLengthPassword, setPasswordIsIncorrect, signInUserAsync } from '../../../redux/slices/auth/signInUserSlice';
 import { Spinner } from './Spinner';
 
 export const SignInRestaurant = () => {
@@ -24,6 +24,8 @@ export const SignInRestaurant = () => {
 
   const navigate = useNavigate();
 
+  const tokenLocalStorage = localStorage.getItem('token');
+
   const [isShowing, setIsShowing] = useState(true);
   const [notEmail, setNotEmail] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
@@ -35,7 +37,6 @@ export const SignInRestaurant = () => {
 
   const dispatch = useDispatch();
   const loading = useSelector(loadingLogin) ?? false;
-  const isLogged = useSelector(isSuccess) ?? false;
   const passwordIncorrect = useSelector(passwordIsIncorrect) ?? false;
   const emailNFound = useSelector(emailNotFound) ?? false;
   const minLengthPassword = useSelector(minLenPassword) ?? false;
@@ -72,13 +73,13 @@ export const SignInRestaurant = () => {
   }
 
   useEffect(() => {
-    if (isLogged) navigate('/cliente/inicio');
+    if (tokenLocalStorage) navigate('/restaurante/inicio');
     if (passwordIncorrect) setErrorPassword(true);
     if (emailNFound) setUserNotFound(true);
     if (minLengthPassword) setErrorMinLenPassword(true);
     if (invEmail) setErrorInvalidEmail(true);
     // eslint-disable-next-line
-  }, [isLogged, passwordIncorrect, emailNFound, minLengthPassword, invEmail]);
+  }, [passwordIncorrect, emailNFound, minLengthPassword, invEmail, tokenLocalStorage]);
 
   return (
     <form onSubmit={handleSubmit} className="px-4">

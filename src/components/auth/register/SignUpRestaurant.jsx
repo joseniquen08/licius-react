@@ -3,9 +3,9 @@ import { CheckIcon, EyeIcon, EyeOffIcon, FingerPrintIcon, IdentificationIcon, Lo
 import { motion } from "framer-motion";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { FaRegBuilding } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { isSuccess, signUpRestaurantAsync } from "../../../redux/slices/auth/signUpUserSlice";
+import { signUpRestaurantAsync } from "../../../redux/slices/auth/signUpUserSlice";
 
 const people = [
   { name: 'Opción 1', id: 1 },
@@ -17,11 +17,13 @@ const people = [
 
 export const SignUpRestaurant = () => {
 
+  const navigate = useNavigate();
+
+  const tokenLocalStorage = localStorage.getItem('token');
+
   const [selected, setSelected] = useState(people[0]);
   const [isShowing, setIsShowing] = useState(true);
   const [notEmail, setNotEmail] = useState(false);
-
-  const isLogged = useSelector(isSuccess) ?? false;
 
   const businessNameRef = useRef();
   const rucRef = useRef();
@@ -31,7 +33,6 @@ export const SignUpRestaurant = () => {
   const passwordRef = useRef();
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,9 +70,9 @@ export const SignUpRestaurant = () => {
   }
 
   useEffect(() => {
-    if (isLogged) navigate('/restaurante/inicio');
+    if (tokenLocalStorage) navigate('/restaurante/inicio');
     // eslint-disable-next-line
-  }, [isLogged]);
+  }, [tokenLocalStorage]);
 
   return (
     <form onSubmit={handleSubmit}>

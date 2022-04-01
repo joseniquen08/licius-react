@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { emailNotFound, invalidEmail, isSuccess, loadingLogin, minLenPassword, passwordIsIncorrect, setEmailNotFound, setInvalidEmail, setMinLengthPassword, setPasswordIsIncorrect, signInUserAsync } from '../../../redux/slices/auth/signInUserSlice';
+import { emailNotFound, invalidEmail, loadingLogin, minLenPassword, passwordIsIncorrect, setEmailNotFound, setInvalidEmail, setMinLengthPassword, setPasswordIsIncorrect, signInUserAsync } from '../../../redux/slices/auth/signInUserSlice';
 import { Spinner } from './Spinner';
 
 const variants = {
@@ -24,6 +24,8 @@ export const SignInClient = () => {
 
   const navigate = useNavigate();
 
+  const tokenLocalStorage = localStorage.getItem('token');
+
   const [isShowing, setIsShowing] = useState(true);
   const [notEmail, setNotEmail] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
@@ -35,7 +37,6 @@ export const SignInClient = () => {
 
   const dispatch = useDispatch();
   const loading = useSelector(loadingLogin) ?? false;
-  const isLogged = useSelector(isSuccess) ?? false;
   const passwordIncorrect = useSelector(passwordIsIncorrect) ?? false;
   const emailNFound = useSelector(emailNotFound) ?? false;
   const minLengthPassword = useSelector(minLenPassword) ?? false;
@@ -72,13 +73,13 @@ export const SignInClient = () => {
   }
 
   useEffect(() => {
-    if (isLogged) navigate('/cliente/inicio');
+    if (tokenLocalStorage) navigate('/cliente/inicio');
     if (passwordIncorrect) setErrorPassword(true);
     if (emailNFound) setUserNotFound(true);
     if (minLengthPassword) setErrorMinLenPassword(true);
     if (invEmail) setErrorInvalidEmail(true);
     // eslint-disable-next-line
-  }, [isLogged, passwordIncorrect, emailNFound, minLengthPassword, invEmail]);
+  }, [tokenLocalStorage, passwordIncorrect, emailNFound, minLengthPassword, invEmail]);
 
   return (
     <form onSubmit={handleSubmit} className="px-4">

@@ -5,7 +5,7 @@ import { contentP, finalD, finalT, preferenceId, totalD, totalP } from "../../..
 
 export const CheckoutPost = () => {
 
-  const mercadopago = useMercadopago.v2(`${process.env.MERCADO_PAGO_PUBLIC_KEY}`, { locale: 'es-PE' });
+  const mercadopago = useMercadopago.v2(`${process.env.REACT_APP_MERCADO_PAGO_PUBLIC_KEY}`, { locale: 'es-PE' });
 
   const contentPost = useSelector(contentP) ?? "";
   const totalDays = useSelector(totalD) ?? 0;

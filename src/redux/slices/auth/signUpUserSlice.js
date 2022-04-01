@@ -14,11 +14,7 @@ export const signUpRestaurantAsync = createAsyncThunk('signUpRestaurant', async 
 export const signUpUserSlice = createSlice({
   name: 'signUpUser',
   initialState,
-  reducers: {
-    setIsLogged: (state, action) => {
-      state.isLogged = action.payload;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(signUpClientAsync.pending, (state, action) => {
@@ -29,7 +25,6 @@ export const signUpUserSlice = createSlice({
         if (action.payload.success) {
           localStorage.setItem('token', action.payload.token.authToken);
           localStorage.setItem('refreshToken', action.payload.token.refreshToken);
-          state.isLogged = true;
         } else {
           if (!action.payload.type) {}
           else {}
@@ -43,7 +38,6 @@ export const signUpUserSlice = createSlice({
         if (action.payload.success) {
           localStorage.setItem('token', action.payload.token.authToken);
           localStorage.setItem('refreshToken', action.payload.token.refreshToken);
-          state.isLogged = true;
         } else {
           if (!action.payload.type) {}
           else {}
@@ -52,8 +46,7 @@ export const signUpUserSlice = createSlice({
   }
 });
 
-export const { setIsLogged } = signUpUserSlice.actions;
+// export const {  } = signUpUserSlice.actions;
 export const loadingSignUpUser= (state) => state.signUpUser.loading;
-export const isSuccess = (state) => state.signUpUser.isLogged;
 
 export default signUpUserSlice.reducer;

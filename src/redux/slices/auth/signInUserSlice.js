@@ -11,9 +11,6 @@ export const signInUserSlice = createSlice({
   name: 'signInUser',
   initialState,
   reducers: {
-    setIsLogged: (state, action) => {
-      state.isLogged = action.payload;
-    },
     setPasswordIsIncorrect: (state, action) => {
       state.passwordIncorrect = action.payload;
     },
@@ -38,7 +35,6 @@ export const signInUserSlice = createSlice({
           state.user = action.payload;
           localStorage.setItem('token', action.payload.token.authToken);
           localStorage.setItem('refreshToken', action.payload.token.refreshToken);
-          state.isLogged = true;
         } else {
           if (!action.payload.type) {
             if (action.payload.message === 'password is incorrect') {
@@ -58,9 +54,8 @@ export const signInUserSlice = createSlice({
   }
 });
 
-export const { setIsLogged, setPasswordIsIncorrect, setEmailNotFound, setMinLengthPassword, setInvalidEmail } = signInUserSlice.actions;
+export const { setPasswordIsIncorrect, setEmailNotFound, setMinLengthPassword, setInvalidEmail } = signInUserSlice.actions;
 export const loadingLogin = (state) => state.signInUser.loading;
-export const isSuccess = (state) => state.signInUser.isLogged;
 export const passwordIsIncorrect = (state) => state.signInUser.passwordIncorrect;
 export const emailNotFound = (state) => state.signInUser.emailNotFound;
 export const minLenPassword = (state) => state.signInUser.minLengthPassword;

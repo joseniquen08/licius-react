@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { isSuccess, loadingSignUpUser, signUpClientAsync } from "../../../redux/slices/auth/signUpUserSlice";
+import { loadingSignUpUser, signUpClientAsync } from "../../../redux/slices/auth/signUpUserSlice";
 import { Spinner } from "../login/Spinner";
 
 const variants = {
@@ -24,6 +24,8 @@ export const SignUpClient = () => {
 
   const navigate = useNavigate();
 
+  const tokenLocalStorage = localStorage.getItem('token');
+
   const [isShowing, setIsShowing] = useState(true);
   const [notEmail, setNotEmail] = useState(false);
 
@@ -34,7 +36,6 @@ export const SignUpClient = () => {
 
   const dispatch = useDispatch();
   const loading = useSelector(loadingSignUpUser) ?? false;
-  const isLogged = useSelector(isSuccess) ?? false;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,9 +70,9 @@ export const SignUpClient = () => {
   }
 
   useEffect(() => {
-    if (isLogged) navigate('/cliente/inicio');
+    if (tokenLocalStorage) navigate('/cliente/inicio');
     // eslint-disable-next-line
-  }, [isLogged]);
+  }, [tokenLocalStorage]);
 
   return (
     <form onSubmit={handleSubmit}>
