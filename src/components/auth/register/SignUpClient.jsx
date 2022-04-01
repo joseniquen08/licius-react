@@ -44,7 +44,6 @@ export const SignUpClient = () => {
         password: passwordRef.current.value,
         first_name: firstNameRef.current.value,
         last_name: lastNameRef.current.value,
-        role: 2
       }
       dispatch(signUpClientAsync(client));
     } else {
@@ -196,7 +195,7 @@ export const SignUpClient = () => {
         </div>
       </motion.div>
       <div className="flex items-start justify-start w-full mt-5 mb-3 space-x-1.5">
-        <input type="checkbox" id="tyc" required className="text-sm flex-none mt-0.5 text-center accent-brand-blue-900" />
+        <input type="checkbox" id="tyc" required className="w-4 h-4 rounded border border-gray-300 focus:ring-transparent text-brand-green-500" />
         <label htmlFor="tyc" className="text-[0.7rem]">Acepto las Condiciones de Uso y Política de privacidad</label>
       </div>
       <motion.button
