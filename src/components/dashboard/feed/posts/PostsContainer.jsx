@@ -1,8 +1,8 @@
 
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from 'styled-components';
-import { statusPayment } from "../../../../redux/slices/post/checkout/checkoutSlice";
+import { setResponsePaymentSuccessAction, statusPayment } from "../../../../redux/slices/post/checkout/checkoutSlice";
 import { ModalNewPost } from "./ModalNewPost";
 import { PostCard } from "./PostCard";
 import { ToastPublishedPost } from "./ToastPublishedPost";
@@ -11,6 +11,8 @@ export const PostsContainer = () => {
 
   const [users, setUsers] = useState([]);
   const [postIsOpen, setPostIsOpen] = useState(false);
+
+  const dispatch = useDispatch();
   const status_payment = useSelector(statusPayment) ?? false;
 
   const closePostModal = () => {
@@ -27,6 +29,15 @@ export const PostsContainer = () => {
     .then(data => setUsers(data.results))
     .catch(error => console.log(error));
   }, []);
+
+  useEffect(() => {
+    if(status_payment) {
+      setTimeout(() => {
+        dispatch(setResponsePaymentSuccessAction(false));
+      }, 5000);
+    }
+    // eslint-disable-next-line
+  }, [status_payment]);
 
   return (
     <>

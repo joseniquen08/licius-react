@@ -16,4 +16,18 @@ export const createPreference = async (orderData) => {
   }
 }
 
-export const savePaymentResponse = async (paymentResponse) => {}
+export const savePaymentResponse = async (paymentResponse) => {
+  try {
+    const response = await fetch(`${URI_SERVER}${ENDPOINTS.SAVEPAYMENTRESPONSE}`, {
+      method: 'post',
+      body: JSON.stringify(paymentResponse),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    return data.status;
+  } catch (error) {
+    console.log(error);
+  }
+}

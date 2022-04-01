@@ -7,8 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { contentP, createPreferenceAsync, setContentPostAction, setFinalDateAction, setFinalTimeAction, setTotalDaysAction, setTotalPriceAction } from "../../../../redux/slices/post/checkout/checkoutSlice";
-import { contentNP, setContentNewPost } from "../../../../redux/slices/post/postSlice";
+import { contentP, createPreferenceAsync, setContentPostAction, setFinalDateAction, setFinalTimeAction, setTitlePostAction, setTotalDaysAction, setTotalPriceAction } from "../../../../redux/slices/post/checkout/checkoutSlice";
+import { contentNP, setContentNewPostAction, setTitleNewPostAction } from "../../../../redux/slices/post/postSlice";
 import decodeToken from "../../../../utils/jwt/decode";
 
 export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
@@ -19,8 +19,10 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
   const [totalDays, setTotalDays] = useState(3);
   const [totalPrice, setTotalPrice] = useState(30);
   const [isPromoted, setIsPromoted] = useState(false);
+  const [errorPostTitle, setErrorPostTitle] = useState(false);
   const [errorPostContent, setErrorPostContent] = useState(false);
 
+  const postTitleRef = useRef();
   const postContentRef = useRef();
 
   const navigate = useNavigate();
@@ -40,25 +42,32 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
   }
 
   const handlePost = () => {
-    if (postContentRef.current.value !== ""){
-      dispatch(setContentNewPost(postContentRef.current.value));
-      if (isPromoted) {
-        const orderData = {
-          title: 'Titulo de prueba',
-          unit_price: 10,
-          quantity: totalDays,
+    if (postTitleRef.current.value !== "") {
+      if (postContentRef.current.value !== ""){
+        dispatch(setTitleNewPostAction(postTitleRef.current.value));
+        dispatch(setContentNewPostAction(postContentRef.current.value));
+        if (isPromoted) {
+          const orderData = {
+            title: postTitleRef.current.value,
+            unit_price: 10,
+            quantity: totalDays,
+          }
+          dispatch(setTitlePostAction(postTitleRef.current.value));
+          dispatch(setContentPostAction(postContentRef.current.value));
+          dispatch(setTotalDaysAction(totalDays));
+          dispatch(setFinalDateAction(moment(startDate).format('L')));
+          dispatch(setFinalTimeAction(moment(startDate).format('LT')));
+          dispatch(setTotalPriceAction(totalPrice));
+          dispatch(createPreferenceAsync(orderData));
+          navigate('/restaurante/post/checkout');
         }
-        dispatch(setContentPostAction(postContentRef.current.value));
-        dispatch(setTotalDaysAction(totalDays));
-        dispatch(setFinalDateAction(moment(startDate).format('L')));
-        dispatch(setFinalTimeAction(moment(startDate).format('LT')));
-        dispatch(setTotalPriceAction(totalPrice));
-        dispatch(createPreferenceAsync(orderData));
-        navigate('/restaurante/post/checkout');
+      } else {
+        setErrorPostContent(true);
+        postContentRef.current.focus();
       }
     } else {
-      setErrorPostContent(true);
-      postContentRef.current.focus();
+      setErrorPostTitle(true);
+      postTitleRef.current.focus();
     }
   }
 
@@ -67,6 +76,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
   ));
 
   const handleChange = () => {
+    setErrorPostTitle(false);
     setErrorPostContent(false);
   }
 
@@ -114,25 +124,39 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
             <div className="relative inline-block w-full max-w-xl px-6 pt-4 pb-2 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
               <Dialog.Title
                 as="h3"
-                className="text-2xl font-inter text-slate-800 py-2 font-semibold text-center"
+                className="text-2xl font-inter text-slate-800 py-4 font-semibold text-center"
               >
                 Crear publicación
               </Dialog.Title>
-              <div className="py-4 space-y-1">
+              <div className="space-y-1">
+                <textarea
+                  type="text"
+                  name="title"
+                  placeholder="¿Qué hay de nuevo?"
+                  rows={1}
+                  ref={postTitleRef}
+                  onChange={handleChange}
+                  className={`placeholder:font-inter font-inter placeholder:text-sm text-sm block w-full focus:outline-none focus:border-slate-300 focus:ring-0 px-4 py-2 border rounded-lg resize-none ${errorPostTitle ? 'border-red-500 focus:border-red-500' : 'border-slate-300'}`}
+                />
+                {
+                  errorPostTitle && <p className="text-red-500 text-sm">Debes agregar un título al post.</p>
+                }
+              </div>
+              <div className="py-2 space-y-1">
                 <textarea
                   type="text"
                   name="comment"
-                  placeholder="¿Qué hay de nuevo?"
+                  placeholder="Cuéntanos un poco más..."
                   rows={4}
                   ref={postContentRef}
                   onChange={handleChange}
-                  className={`placeholder:font-inter font-inter placeholder:text-sm text-sm block w-full focus:outline-none focus:border-slate-300 focus:ring-0 px-4 py-2 border rounded-lg resize-none ${errorPostContent ? 'border-red-500' : 'border-slate-300'}`}
+                  className={`placeholder:font-inter font-inter placeholder:text-sm text-sm block w-full focus:outline-none focus:border-slate-300 focus:ring-0 px-4 py-2 border rounded-lg resize-none ${errorPostContent ? 'border-red-500 focus:border-red-500' : 'border-slate-300'}`}
                 />
                 {
                   errorPostContent && <p className="text-red-500 text-sm">Debes agregar un texto al post.</p>
                 }
               </div>
-              <div className="border px-4 py-1 border-slate-300 rounded-lg flex items-center justify-between">
+              <div className="border my-2 px-4 py-1 border-slate-300 rounded-lg flex items-center justify-between">
                 <p className="text-slate-800 font-inter py-2">Añade a tu post...</p>
                 <div className="flex">
                   <button type="button" className="hover:bg-slate-100 rounded-full p-1.5 focus:outline-none">

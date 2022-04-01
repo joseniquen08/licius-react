@@ -6,13 +6,17 @@ export const postSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    setContentNewPost: (state, action) => {
+    setTitleNewPostAction: (state, action) => {
+      state.titleNewPost = action.payload;
+    },
+    setContentNewPostAction: (state, action) => {
       state.contentNewPost = action.payload;
     }
   }
 });
 
-export const { setContentNewPost } = postSlice.actions;
+export const { setTitleNewPostAction, setContentNewPostAction } = postSlice.actions;
+export const titleNP = (state) => state.post.titleNewPost;
 export const contentNP = (state) => state.post.contentNewPost;
 
 export default postSlice.reducer;
