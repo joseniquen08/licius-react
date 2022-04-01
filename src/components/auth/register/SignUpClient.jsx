@@ -44,6 +44,7 @@ export const SignUpClient = () => {
         password: passwordRef.current.value,
         first_name: firstNameRef.current.value,
         last_name: lastNameRef.current.value,
+        role: 2
       }
       dispatch(signUpClientAsync(client));
     } else {

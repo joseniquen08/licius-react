@@ -44,6 +44,7 @@ export const SignUpRestaurant = () => {
         category_id: selected.id,
         email: emailRef.current.value,
         password: passwordRef.current.value,
+        role: 3
       }
       dispatch(signUpRestaurantAsync(restaurant));
     } else {
