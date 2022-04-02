@@ -5,7 +5,7 @@ import { FaRegBuilding } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { emailNotFound, invalidEmail, loadingLogin, minLenPassword, passwordIsIncorrect, setEmailNotFound, setInvalidEmail, setMinLengthPassword, setPasswordIsIncorrect, signInUserAsync } from '../../../redux/slices/auth/signInUserSlice';
-import { Spinner } from './Spinner';
+import { Spinner } from '../../shared/Spinner';
 
 export const SignInRestaurant = () => {
 

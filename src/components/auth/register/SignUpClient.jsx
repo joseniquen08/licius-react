@@ -5,7 +5,7 @@ import { FaRegUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loadingSignUpUser, signUpClientAsync } from "../../../redux/slices/auth/signUpUserSlice";
-import { Spinner } from "../login/Spinner";
+import { Spinner } from "../../shared/Spinner";
 
 const variants = {
   true: {

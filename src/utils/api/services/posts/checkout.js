@@ -16,6 +16,23 @@ export const createPreference = async (orderData) => {
   }
 }
 
+export const createPostWithouthPayment = async (post) => {
+  try {
+    const response = await fetch(`${URI_SERVER}${ENDPOINTS.CREATEPOST}`, {
+      method: 'post',
+      body: JSON.stringify(post),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${localStorage.getItem('token')}`,
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const savePaymentResponse = async (paymentResponse) => {
   try {
     const response = await fetch(`${URI_SERVER}${ENDPOINTS.SAVEPAYMENTRESPONSE}`, {

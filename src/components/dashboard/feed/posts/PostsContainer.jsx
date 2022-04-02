@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from 'styled-components';
 import { setResponsePaymentSuccessAction, statusPayment } from "../../../../redux/slices/post/checkout/checkoutSlice";
+import { setPostSuccessAction, statusCP } from "../../../../redux/slices/post/postSlice";
+import { ToastPost } from "../../../shared/ToastPost";
+import { ToastPublishedPost } from "../../../shared/ToastPublishedPost";
 import { ModalNewPost } from "./ModalNewPost";
 import { PostCard } from "./PostCard";
-import { ToastPublishedPost } from "./ToastPublishedPost";
 
 export const PostsContainer = () => {
 
@@ -14,6 +16,7 @@ export const PostsContainer = () => {
 
   const dispatch = useDispatch();
   const status_payment = useSelector(statusPayment) ?? false;
+  const statusCreatePost = useSelector(statusCP) ?? false;
 
   const closePostModal = () => {
     setPostIsOpen(false);
@@ -31,13 +34,18 @@ export const PostsContainer = () => {
   }, []);
 
   useEffect(() => {
-    if(status_payment) {
+    if (status_payment) {
       setTimeout(() => {
         dispatch(setResponsePaymentSuccessAction(false));
       }, 5000);
     }
+    if (statusCreatePost) {
+      setTimeout(() => {
+        dispatch(setPostSuccessAction(false));
+      }, 5000);
+    }
     // eslint-disable-next-line
-  }, [status_payment]);
+  }, [status_payment, statusCreatePost]);
 
   return (
     <>
@@ -64,7 +72,10 @@ export const PostsContainer = () => {
       </Container>
       <ModalNewPost postIsOpen={postIsOpen} closePostModal={closePostModal}/>
       {
-        status_payment && <ToastPublishedPost />
+        status_payment && <ToastPublishedPost/>
+      }
+      {
+        statusCreatePost && <ToastPost/>
       }
     </>
   )

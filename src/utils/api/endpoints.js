@@ -5,5 +5,6 @@ export const ENDPOINTS = {
   CREATECLIENT: '/user/client/signup',
   CREATERESTAURANT: '/user/restaurant/signup',
   CREATEPREFERENCE: '/checkout',
+  CREATEPOST: '/posts',
   SAVEPAYMENTRESPONSE: '/create_payment',
 }

@@ -8,8 +8,9 @@ import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { contentP, createPreferenceAsync, setContentPostAction, setFinalDateAction, setFinalTimeAction, setTitlePostAction, setTotalDaysAction, setTotalPriceAction } from "../../../../redux/slices/post/checkout/checkoutSlice";
-import { contentNP, setContentNewPostAction, setTitleNewPostAction } from "../../../../redux/slices/post/postSlice";
+import { contentNP, createPostWithouthPaymentAsync, createPS, loadingPost, setContentNewPostAction, setPostSuccessAction, setTitleNewPostAction } from "../../../../redux/slices/post/postSlice";
 import decodeToken from "../../../../utils/jwt/decode";
+import { Spinner } from "../../../shared/Spinner";
 
 export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
 
@@ -21,6 +22,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
   const [isPromoted, setIsPromoted] = useState(false);
   const [errorPostTitle, setErrorPostTitle] = useState(false);
   const [errorPostContent, setErrorPostContent] = useState(false);
+  const [loadingNewPost, setLoadingNewPost] = useState(false);
 
   const postTitleRef = useRef();
   const postContentRef = useRef();
@@ -29,6 +31,8 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
   const dispatch = useDispatch();
   const contentPost = useSelector(contentP) ?? "";
   const contentNewPost = useSelector(contentNP) ?? "";
+  const postIsLoading = useSelector(loadingPost) ?? false;
+  const createPostSuccess = useSelector(createPS) ?? false;
 
   const handleDate = (date) => {
     const now = new Date();
@@ -60,6 +64,13 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
           dispatch(setTotalPriceAction(totalPrice));
           dispatch(createPreferenceAsync(orderData));
           navigate('/restaurante/post/checkout');
+        } else {
+          dispatch(createPostWithouthPaymentAsync({
+            user_id: decodeToken(localStorage.getItem('token')).id,
+            title: postTitleRef.current.value,
+            content: postContentRef.current.value,
+            attachment_urls: []
+          }));
         }
       } else {
         setErrorPostContent(true);
@@ -81,8 +92,15 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
   }
 
   useEffect(() => {
-
-  }, [contentPost, contentNewPost]);
+    if (postIsLoading) setLoadingNewPost(true);
+    if (createPostSuccess) {
+      setErrorPostContent(false);
+      setLoadingNewPost(false);
+      dispatch(setPostSuccessAction(true));
+      closePostModal();
+    }
+    // eslint-disable-next-line
+  }, [contentPost, contentNewPost, postIsLoading, createPostSuccess]);
 
   return (
     <Transition appear show={postIsOpen} as={Fragment}>
@@ -224,10 +242,10 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
               <div className="py-4 flex item-center justify-center">
                 <button
                   type="button"
-                  className="inline-flex justify-center font-inter px-5 py-2 text-base font-semibold text-white bg-brand-green-500 border border-transparent rounded-full hover:bg-brand-green-700 focus:outline-none"
+                  className="inline-flex justify-center font-inter w-36 py-2 text-base font-semibold text-white bg-brand-green-500 border border-transparent rounded-full hover:bg-brand-green-700 focus:outline-none"
                   onClick={handlePost}
                 >
-                  {isPromoted ? 'Continuar' : 'Publicar'}
+                  {isPromoted ? 'Continuar' : (loadingNewPost ? (<Spinner/>) : 'Publicar')}
                 </button>
               </div>
               <button
