@@ -49,10 +49,10 @@ export const Navbar = () => {
                 <LinkReactScroll to="about" smooth={true} duration={500} className="font-medium leading-6 tracking-normal text-gray-600 transition duration-150 ease-out cursor-pointer focus:outline-none hover:text-gray-900">Home</LinkReactScroll>
               </li>
               <li>
-                <LinkReactScroll to="skills" smooth={true} duration={500} className="font-medium leading-6 tracking-normal text-gray-600 transition duration-150 ease-out cursor-pointer focus:outline-none hover:text-gray-900">Features</LinkReactScroll>
+                <LinkReactScroll to="skills" smooth={true} duration={500} className="font-medium leading-6 tracking-normal text-gray-600 transition duration-150 ease-out cursor-pointer focus:outline-none hover:text-gray-900">Experiencias</LinkReactScroll>
               </li>
               <li>
-                <LinkReactScroll to="projects" smooth={true} duration={500} className="font-medium leading-6 tracking-normal text-gray-600 transition duration-150 ease-out cursor-pointer focus:outline-none hover:text-gray-900">Pricing</LinkReactScroll>
+                <LinkReactScroll to="projects" smooth={true} duration={500} className="font-medium leading-6 tracking-normal text-gray-600 transition duration-150 ease-out cursor-pointer focus:outline-none hover:text-gray-900">Preguntas frecuentes</LinkReactScroll>
               </li>
             </ul>
           </div>

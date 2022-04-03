@@ -5,12 +5,18 @@ import { forwardRef, Fragment, useEffect, useRef, useState } from "react";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
+import Masonry from "react-masonry-css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { contentP, createPreferenceAsync, setContentPostAction, setFinalDateAction, setFinalTimeAction, setTitlePostAction, setTotalDaysAction, setTotalPriceAction } from "../../../../redux/slices/post/checkout/checkoutSlice";
 import { contentNP, createPostWithouthPaymentAsync, createPS, loadingPost, setContentNewPostAction, setPostSuccessAction, setTitleNewPostAction } from "../../../../redux/slices/post/postSlice";
 import decodeToken from "../../../../utils/jwt/decode";
 import { Spinner } from "../../../shared/Spinner";
+
+const breakpointColumnsObj = {
+  default: 3,
+  640: 2
+};
 
 export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
 
@@ -23,9 +29,11 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
   const [errorPostTitle, setErrorPostTitle] = useState(false);
   const [errorPostContent, setErrorPostContent] = useState(false);
   const [loadingNewPost, setLoadingNewPost] = useState(false);
+  const [imagesUrl, setImagesUrl] = useState(null);
 
   const postTitleRef = useRef();
   const postContentRef = useRef();
+  const imagesRef = useRef();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -91,6 +99,19 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
     setErrorPostContent(false);
   }
 
+  const handleImages = () => {
+    imagesRef.current.click();
+  }
+
+  const processImage = (e) => {
+    let images = [];
+    for (let i = 0; i < e.target.files.length; i++) {
+      const imageUrl = URL.createObjectURL(e.target.files[i]);
+      images.push(imageUrl);
+    }
+    setImagesUrl(images);
+  }
+
   useEffect(() => {
     if (postIsLoading) setLoadingNewPost(true);
     if (createPostSuccess) {
@@ -106,10 +127,11 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
     <Transition appear show={postIsOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-50 overflow-y-auto bg-slate-400/50"
+        className="fixed inset-0 z-50 overflow-y-auto bg-slate-400/50 py-8"
         onClose={() => {
           closePostModal();
           setErrorPostContent(false);
+          setImagesUrl(null);
         }}
       >
         <div className="min-h-screen px-4 text-center">
@@ -174,16 +196,37 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
                   errorPostContent && <p className="text-red-500 text-sm">Debes agregar un texto al post.</p>
                 }
               </div>
-              <div className="border my-2 px-4 py-1 border-slate-300 rounded-lg flex items-center justify-between">
-                <p className="text-slate-800 font-inter py-2">Añade a tu post...</p>
-                <div className="flex">
-                  <button type="button" className="hover:bg-slate-100 rounded-full p-1.5 focus:outline-none">
-                    <PhotographIcon className="h-5 w-5" />
-                  </button>
-                  <button type="button" className="hover:bg-slate-100 rounded-full p-1.5 focus:outline-none">
-                    <EmojiHappyIcon className="h-5 w-5" />
-                  </button>
+              <div className="border my-2 px-4 py-1 border-slate-300 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <p className="text-slate-800 text-sm font-inter py-2">Añade a tu post...</p>
+                  <div className="flex items-center justify-center">
+                    <input type="file" accept="image/*" onChange={processImage} ref={imagesRef} className="hidden" multiple/>
+                    <button type="button" onClick={() => handleImages()} className="hover:bg-slate-100 flex-none rounded-full h-8 w-8 focus:outline-none flex items-center justify-center">
+                      <PhotographIcon className="h-5 w-5" />
+                    </button>
+                    <button type="button" className="hover:bg-slate-100 flex-none rounded-full h-8 w-8 focus:outline-none flex items-center justify-center">
+                      <EmojiHappyIcon className="h-5 w-5" />
+                    </button>
+                    <div className="absolute">
+                      {/* <EmojiPicker/> */}
+                    </div>
+                  </div>
                 </div>
+                {
+                  imagesUrl && (
+                    <Masonry
+                      breakpointCols={breakpointColumnsObj}
+                      className="my-masonry-grid py-4"
+                      columnClassName="my-masonry-grid_column"
+                    >
+                      {
+                        imagesUrl.map((imageUrl, index) => (
+                          <img src={imageUrl} alt={imageUrl} className="rounded-xl border border-slate-200"/>
+                        ))
+                      }
+                    </Masonry>
+                  )
+                }
               </div>
               {
                 role === 3 && (
@@ -252,6 +295,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
                 onClick={() => {
                   closePostModal();
                   setErrorPostContent(false);
+                  setImagesUrl(null);
                 }}
                 type="button"
                 className="absolute focus:outline-none hover:bg-slate-100 top-5 right-5 rounded-full p-1"

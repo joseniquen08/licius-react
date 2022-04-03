@@ -7,4 +7,5 @@ export const ENDPOINTS = {
   CREATEPREFERENCE: '/checkout',
   CREATEPOST: '/posts',
   SAVEPAYMENTRESPONSE: '/create_payment',
+  UPLOADIMAGE: '/upload/image',
 }
