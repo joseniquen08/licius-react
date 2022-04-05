@@ -127,7 +127,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
     <Transition appear show={postIsOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-50 overflow-y-auto bg-slate-400/50 py-8"
+        className="fixed inset-0 z-50 overflow-y-auto bg-slate-400/50"
         onClose={() => {
           closePostModal();
           setErrorPostContent(false);
@@ -161,7 +161,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="relative inline-block w-full max-w-xl px-6 pt-4 pb-2 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+            <div className="relative inline-block w-full max-w-xl px-6 pt-4 pb-2 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl my-8">
               <Dialog.Title
                 as="h3"
                 className="text-2xl font-inter text-slate-800 py-4 font-semibold text-center"

@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useMercadopago } from "react-sdk-mercadopago/lib";
-import { contentP, finalD, finalT, preferenceId, totalD, totalP } from "../../../../../redux/slices/post/checkout/checkoutSlice";
+import { contentP, finalD, finalT, preferenceId, titleP, totalD, totalP } from "../../../../../redux/slices/post/checkout/checkoutSlice";
 
 export const CheckoutPost = () => {
 
   const mercadopago = useMercadopago.v2(`${process.env.REACT_APP_MERCADO_PAGO_PUBLIC_KEY}`, { locale: 'es-PE' });
 
+  const titlePost = useSelector(titleP) ?? "";
   const contentPost = useSelector(contentP) ?? "";
   const totalDays = useSelector(totalD) ?? 0;
   const finalDate = useSelector(finalD) ?? "";
@@ -14,8 +15,13 @@ export const CheckoutPost = () => {
   const totalPrice = useSelector(totalP) ?? 0;
   const preference_id = useSelector(preferenceId) ?? false;
 
+  const divButtonRef = useRef();
+
   useEffect(() => {
     if (mercadopago && preference_id) {
+      if (divButtonRef.current.hasChildNodes()) {
+        divButtonRef.current.removeChild(divButtonRef.current.firstChild);
+      }
       mercadopago.checkout({
         preference: {
           id: preference_id,
@@ -28,7 +34,7 @@ export const CheckoutPost = () => {
           elementsColor: '#1E6C5B',
           headerColor: '#1E6C5B',
         }
-      })
+      });
     }
   }, [contentPost, totalDays, finalDate, finalTime, totalPrice, mercadopago, preference_id]);
 
@@ -42,7 +48,8 @@ export const CheckoutPost = () => {
           <div className="space-y-6 w-1/2 px-8">
             <div className="space-y-3">
               <p className="font-semibold text-xl">Publicación</p>
-              <div className="border border-gray-300 rounded-lg px-5 py-3">
+              <div className="border border-gray-300 rounded-lg px-5 py-3 space-y-1">
+                <p className="text-lg font-semibold">{titlePost}</p>
                 <p>{contentPost}</p>
               </div>
             </div>
@@ -56,7 +63,7 @@ export const CheckoutPost = () => {
               <p className="font-semibold text-xl">Monto total</p>
               <p>S/. {totalPrice}.00</p>
             </div>
-            <div className="cho-container"/>
+            <div className="cho-container" ref={divButtonRef}/>
           </div>
         </div>
       </div>
