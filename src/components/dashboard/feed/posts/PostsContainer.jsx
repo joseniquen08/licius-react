@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from 'styled-components';
 import { setResponsePaymentSuccessAction, statusPayment } from "../../../../redux/slices/post/checkout/checkoutSlice";
 import { setPostSuccessAction, statusCP } from "../../../../redux/slices/post/postSlice";
+import { getPosts } from "../../../../utils/api/services/posts/posts";
 import { ToastPost } from "../../../shared/ToastPost";
 import { ToastPublishedPost } from "../../../shared/ToastPublishedPost";
 import { ModalNewPost } from "./ModalNewPost";
@@ -11,7 +12,7 @@ import { PostCard } from "./PostCard";
 
 export const PostsContainer = () => {
 
-  const [users, setUsers] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [postIsOpen, setPostIsOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -27,11 +28,9 @@ export const PostsContainer = () => {
   }
 
   useEffect(() => {
-    fetch('https://randomuser.me/api/?results=10')
-    .then(response => response.json())
-    .then(data => setUsers(data.results))
-    .catch(error => console.log(error));
-  }, []);
+    getPosts()
+    .then(data => setPosts(data));
+  }, [statusCreatePost]);
 
   useEffect(() => {
     if (status_payment) {
@@ -62,9 +61,9 @@ export const PostsContainer = () => {
             </div>
           </div>
           {
-            users.length === 0 ? (<></>) : (
-              users.map((user, key) => (
-                <PostCard key={key} image={user.picture.large} name={user.name} location={user.location} number={key} />
+            posts.length === 0 ? (<></>) : (
+              posts.map((post, index) => (
+                <PostCard key={post.id} name={post.title} number={index+1} content={post.content}/>
               ))
             )
           }

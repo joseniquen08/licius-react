@@ -1,16 +1,16 @@
 import { BookmarkIcon, ChatIcon, HeartIcon, ShareIcon } from '@heroicons/react/outline'
 import React from 'react'
 
-export const PostCard = ({ image, name, location, number }) => {
+export const PostCard = ({ name, content, number }) => {
   return (
     <div className="w-full border rounded-xl py-4 lg:py-6 px-6 lg:px-11">
       <div className="flex flex-row items-center space-x-3 py-1 px-1">
         <div className="h-12 w-12 rounded-full grow-0 flex-none overflow-hidden ">
-          <img src={image} alt="image_random" className="object-cover object-center" />
+          <img src="/images/logo-rest.png" alt="image_random" className="object-cover object-center" />
         </div>
         <div>
-          <p className="text-base font-bold">{name.first} {name.last}</p>
-          <p className="text-sm font-medium text-gray-600">{location.city}, {location.country}</p>
+          <p className="text-base font-bold">{name}</p>
+          <p className="text-sm font-medium text-gray-600">{name}</p>
         </div>
       </div>
       <div className="rounded-xl overflow-hidden my-3">
@@ -35,7 +35,7 @@ export const PostCard = ({ image, name, location, number }) => {
         </div>
       </div>
       <div>
-        <p className="text-sm text-gray-800">Lorem ipsum dolor sit amet consectetur adipisicing elit. At iste officiis eum quibusdam quidem ducimus reprehenderit culpa, ea nisi labore deserunt mollitia consequuntur enim, cupiditate architecto excepturi, facilis sequi voluptatem?</p>
+        <p className="text-sm text-gray-800">{content}</p>
       </div>
       <div className="py-5 flex flex-row space-x-3">
         <div className="h-14 w-14 rounded-full grow-0 flex-none overflow-hidden ">

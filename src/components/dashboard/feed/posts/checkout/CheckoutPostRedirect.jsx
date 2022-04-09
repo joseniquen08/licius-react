@@ -21,7 +21,12 @@ export const CheckoutPostRedirect = () => {
       user_id: decodeToken(localStorage.getItem('token')).id,
       payment_id: searchParams.get("payment_id"),
       payment_type: searchParams.get("payment_type"),
-      merchant_order_id: searchParams.get("merchant_order_id")
+      merchant_order_id: searchParams.get("merchant_order_id"),
+      begin_date: "Tue Apr 05 2022 17:27:09 GMT-0500",
+      end_date: "Wed Apr 06 2022 17:27:09 GMT-0500",
+      unit_price: 10,
+      quantity: 15,
+      total_amount: "150"
     }));
     // eslint-disable-next-line
   }, []);
