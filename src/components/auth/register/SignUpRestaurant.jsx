@@ -3,9 +3,10 @@ import { CheckIcon, EyeIcon, EyeOffIcon, FingerPrintIcon, IdentificationIcon, Lo
 import { motion } from "framer-motion";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { FaRegBuilding } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { signUpRestaurantAsync } from "../../../redux/slices/auth/signUpUserSlice";
+import { loadingSignUpUser, signUpRestaurantAsync } from "../../../redux/slices/auth/signUpUserSlice";
+import { Spinner } from "../../shared/Spinner";
 
 const people = [
   { name: 'Opción 1', id: 1 },
@@ -33,6 +34,7 @@ export const SignUpRestaurant = () => {
   const passwordRef = useRef();
 
   const dispatch = useDispatch();
+  const loading = useSelector(loadingSignUpUser) ?? false;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -298,11 +300,11 @@ export const SignUpRestaurant = () => {
         <label htmlFor="tyc" className="text-[0.7rem]">Acepto las Condiciones de Uso y Política de privacidad</label>
       </div>
       <motion.button
-        type="submit"
+        type={loading ? "button" : "submit"}
         whileHover={{ scale: 1.03 }}
         className="w-full px-4 py-2 text-sm font-medium tracking-wide text-white border border-transparent rounded-md bg-brand-green-500 focus:outline-none"
       >
-        Registrarme
+        {loading ? <Spinner/> : 'Registrarme'}
       </motion.button>
       <div className="flex py-2.5 text-[0.85rem] items-center justify-center space-x-1">
         <p>¿Ya estás registrado?</p>

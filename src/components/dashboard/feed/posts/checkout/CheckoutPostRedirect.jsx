@@ -22,11 +22,11 @@ export const CheckoutPostRedirect = () => {
       payment_id: searchParams.get("payment_id"),
       payment_type: searchParams.get("payment_type"),
       merchant_order_id: searchParams.get("merchant_order_id"),
-      begin_date: "Tue Apr 05 2022 17:27:09 GMT-0500",
-      end_date: "Wed Apr 06 2022 17:27:09 GMT-0500",
+      begin_date: new Date(),
+      end_date: new Date(new Date().setDate(new Date().getDate() + localStorage.getItem("totalDays"))),
       unit_price: 10,
-      quantity: 15,
-      total_amount: "150"
+      quantity: localStorage.getItem("totalDays"),
+      total_amount: localStorage.getItem("totalDays") * 10,
     }));
     // eslint-disable-next-line
   }, []);

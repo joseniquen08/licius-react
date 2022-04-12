@@ -63,7 +63,7 @@ export const PostsContainer = () => {
           {
             posts.length === 0 ? (<></>) : (
               posts.map((post, index) => (
-                <PostCard key={post.id} name={post.title} number={index+1} content={post.content}/>
+                <PostCard key={post.id} title={post.title} author={post.client ? post.client.full_name : post.restaurant.nombre_comercial} number={index+1} content={post.content}/>
               ))
             )
           }

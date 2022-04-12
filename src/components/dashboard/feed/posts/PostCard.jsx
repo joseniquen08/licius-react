@@ -1,22 +1,26 @@
 import { BookmarkIcon, ChatIcon, HeartIcon, ShareIcon } from '@heroicons/react/outline'
 import React from 'react'
 
-export const PostCard = ({ name, content, number }) => {
+export const PostCard = ({ title, author, content, number }) => {
   return (
-    <div className="w-full border rounded-xl py-4 lg:py-6 px-6 lg:px-11">
+    <div className="w-full border rounded-xl py-2 lg:py-5 px-6 lg:px-8">
       <div className="flex flex-row items-center space-x-3 py-1 px-1">
         <div className="h-12 w-12 rounded-full grow-0 flex-none overflow-hidden ">
           <img src="/images/logo-rest.png" alt="image_random" className="object-cover object-center" />
         </div>
         <div>
-          <p className="text-base font-bold">{name}</p>
-          <p className="text-sm font-medium text-gray-600">{name}</p>
+          <p className="text-base text-gray-700 font-semibold">{author}</p>
+          <p className="text-xs font-medium text-gray-600">{author}</p>
         </div>
       </div>
-      <div className="rounded-xl overflow-hidden my-3">
+      <div className='my-3'>
+        <p className="text-base font-semibold text-gray-800">{title}</p>
+        <p className="text-sm text-gray-800">{content}</p>
+      </div>
+      <div className="rounded-xl overflow-hidden my-1">
         <img src={`https://picsum.photos/500/300?random=${number}`} alt="image_random_2" className="object-cover w-full object-center" />
       </div>
-      <div className="flex flex-row justify-between px-1 py-2.5">
+      <div className="flex flex-row justify-between px-1 py-2">
         <div className="flex flex-row space-x-4">
           <button type="button" className="">
             <HeartIcon className="h-6 w-6 text-gray-800" />
@@ -33,9 +37,6 @@ export const PostCard = ({ name, content, number }) => {
             <BookmarkIcon className="w-6 h-6 text-gray-800" />
           </button>
         </div>
-      </div>
-      <div>
-        <p className="text-sm text-gray-800">{content}</p>
       </div>
       <div className="py-5 flex flex-row space-x-3">
         <div className="h-14 w-14 rounded-full grow-0 flex-none overflow-hidden ">

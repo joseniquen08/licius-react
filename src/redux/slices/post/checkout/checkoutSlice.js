@@ -25,6 +25,7 @@ export const checkoutSlice = createSlice({
     },
     setTotalDaysAction: (state, action) => {
       state.totalDays = action.payload;
+      localStorage.setItem("totalDays", action.payload);
     },
     setFinalDateAction: (state, action) => {
       state.finalDate = action.payload;
