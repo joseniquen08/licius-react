@@ -53,11 +53,16 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
     setTotalPrice(days * 10);
   }
 
-  const handlePost = () => {
+  const handlePost = async () => {
     if (postTitleRef.current.value !== "") {
       if (postContentRef.current.value !== ""){
         dispatch(setTitleNewPostAction(postTitleRef.current.value));
         dispatch(setContentNewPostAction(postContentRef.current.value));
+        if (imagesUrl.length !== 0) {
+          for (const image of imagesUrl) {
+            // dispatch(setContentPostAction(image));
+          }
+        }
         if (isPromoted) {
           const orderData = {
             title: postTitleRef.current.value,
@@ -221,7 +226,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
                     >
                       {
                         imagesUrl.map((imageUrl, index) => (
-                          <img src={imageUrl} alt={imageUrl} className="rounded-xl border border-slate-200"/>
+                          <img key={`${imageUrl}_${index}`} src={imageUrl} alt={imageUrl} className="rounded-xl border border-slate-200"/>
                         ))
                       }
                     </Masonry>

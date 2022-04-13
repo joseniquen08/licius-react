@@ -15,10 +15,10 @@ export const uploadImage = async (image) => {
   }
 }
 
-export const uploadImages = async (images) => {
-  try {
-    
-  } catch (error) {
-    console.log(error);
-  }
-}
+// export const uploadImages = async (images) => {
+//   try {
+
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }

@@ -3,14 +3,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from 'styled-components';
 import { setResponsePaymentSuccessAction, statusPayment } from "../../../../redux/slices/post/checkout/checkoutSlice";
-import { setPostSuccessAction, statusCP } from "../../../../redux/slices/post/postSlice";
+import { setCreatePostSuccessAction, setPostSuccessAction, statusCP } from "../../../../redux/slices/post/postSlice";
 import { getPosts } from "../../../../utils/api/services/posts/posts";
+import decodeToken from "../../../../utils/jwt/decode";
 import { ToastPost } from "../../../shared/ToastPost";
 import { ToastPublishedPost } from "../../../shared/ToastPublishedPost";
 import { ModalNewPost } from "./ModalNewPost";
 import { PostCard } from "./PostCard";
 
 export const PostsContainer = () => {
+
+  const decryptedToken = decodeToken(localStorage.getItem("token"));
+  const img_perfil = decryptedToken.user.profile.image_url;
 
   const [posts, setPosts] = useState([]);
   const [postIsOpen, setPostIsOpen] = useState(false);
@@ -40,6 +44,7 @@ export const PostsContainer = () => {
     }
     if (statusCreatePost) {
       setTimeout(() => {
+        dispatch(setCreatePostSuccessAction(false));
         dispatch(setPostSuccessAction(false));
       }, 5000);
     }
@@ -48,11 +53,11 @@ export const PostsContainer = () => {
 
   return (
     <>
-      <Container className="posts__container w-full py-5 lg:py-8 md:px-6 lg:px-10 overflow-y-auto">
+      <Container className="w-full py-5 lg:py-8 md:px-6 lg:px-10 overflow-y-auto">
         <div className="max-w-[45rem] mx-auto flex flex-col space-y-4">
           <div className="border rounded-xl py-6 px-8 flex items-center space-x-3 w-full">
-            <div className="h-10 w-10 rounded-full overflow-hidden grow-0 flex-none">
-              <img src="https://i.pravatar.cc/300?img=12" alt="image_random" />
+            <div className="h-10 w-10 rounded-full overflow-hidden flex flex-none">
+              <img className="w-10 h-10 object-cover object-center bg-white flex-none" src={`${img_perfil === '' ? '/images/user-default.png' : img_perfil}`} alt="user_img" />
             </div>
             <div className="w-full h-full">
               <button onClick={openPostModal} type="button" className="focus:outline-none cursor-text px-5 border hover:bg-slate-100 text-left text-gray-500 text-sm border-slate-300 w-full rounded-full py-2">
@@ -63,7 +68,7 @@ export const PostsContainer = () => {
           {
             posts.length === 0 ? (<></>) : (
               posts.map((post, index) => (
-                <PostCard key={post.id} title={post.title} author={post.client ? post.client.full_name : post.restaurant.nombre_comercial} number={index+1} content={post.content}/>
+                <PostCard key={post.id} image_perfil={post.client ? post.client.image_url : post.restaurant.image_url} title={post.title} author={post.client ? post.client.full_name : post.restaurant.nombre_comercial} number={index+1} content={post.content}/>
               ))
             )
           }

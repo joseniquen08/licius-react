@@ -1,12 +1,12 @@
 import { BookmarkIcon, ChatIcon, HeartIcon, ShareIcon } from '@heroicons/react/outline'
 import React from 'react'
 
-export const PostCard = ({ title, author, content, number }) => {
+export const PostCard = ({ title, image_perfil, author, content, number }) => {
   return (
     <div className="w-full border rounded-xl py-2 lg:py-5 px-6 lg:px-8">
       <div className="flex flex-row items-center space-x-3 py-1 px-1">
         <div className="h-12 w-12 rounded-full grow-0 flex-none overflow-hidden ">
-          <img src="/images/logo-rest.png" alt="image_random" className="object-cover object-center" />
+          <img src={image_perfil === '' ? '/images/user-default.png' : image_perfil} alt="image_random" className="object-cover object-center" />
         </div>
         <div>
           <p className="text-base text-gray-700 font-semibold">{author}</p>

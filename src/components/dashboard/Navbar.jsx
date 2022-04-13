@@ -13,6 +13,7 @@ export const Navbar = () => {
   const decryptedToken = decodeToken(localStorage.getItem("token"));
   const role = decryptedToken.role;
   const name = role === 2 ? decryptedToken.user.profile.first_name : decryptedToken.user.profile.nombre_comercial;
+  const img_perfil = decryptedToken.user.profile.image_url;
 
   const [searchIsOpen, setSearchIsOpen] = useState(false);
 
@@ -55,12 +56,12 @@ export const Navbar = () => {
                 </button>
                 <div className="relative ml-3 border px-2 py-1.5 rounded-md border-white/40">
                   <Menu as="div" className="relative inline-block text-left">
-                    <div className="flex items-center justify-center space-x-2">
+                    <Menu.Button className="flex items-center justify-center space-x-2">
                       <p className="flex-none text-white text-sm">{name}</p>
-                      <Menu.Button className="justify-center w-6 h-6 text-sm font-medium text-white rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                        <img className="w-6 h-6 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                      </Menu.Button>
-                    </div>
+                      <div className="justify-center w-6 h-6 text-sm font-medium text-white rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 flex overflow-hidden">
+                        <img className="w-6 h-6 object-cover object-center bg-white flex-none" src={`${img_perfil === '' ? '/images/user-default.png' : img_perfil}`} alt="user_img" />
+                      </div>
+                    </Menu.Button>
                     <Transition
                       as={Fragment}
                       enter="transition ease-out duration-100"

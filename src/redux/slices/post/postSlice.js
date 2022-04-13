@@ -17,6 +17,9 @@ export const postSlice = createSlice({
     setContentNewPostAction: (state, action) => {
       state.contentNewPost = action.payload;
     },
+    setCreatePostSuccessAction: (state, action) => {
+      state.createPostSuccess = action.payload;
+    },
     setPostSuccessAction: (state, action) => {
       state.statusCreatePost = action.payload;
     }
@@ -34,7 +37,7 @@ export const postSlice = createSlice({
   }
 });
 
-export const { setTitleNewPostAction, setContentNewPostAction, setPostSuccessAction } = postSlice.actions;
+export const { setTitleNewPostAction, setContentNewPostAction, setCreatePostSuccessAction, setPostSuccessAction } = postSlice.actions;
 export const loadingPost = (state) => state.post.postIsLoading;
 export const titleNP = (state) => state.post.titleNewPost;
 export const contentNP = (state) => state.post.contentNewPost;
