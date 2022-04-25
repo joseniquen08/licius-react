@@ -17,7 +17,7 @@ export const CheckoutPostRedirect = () => {
     dispatch(savePaymentResponseAsync({
       title: localStorage.getItem("titlePost"),
       content: localStorage.getItem("contentPost"),
-      attachment_urls: [],
+      attachment_urls: localStorage.getItem("attachmentUrls"),
       user_id: decodeToken(localStorage.getItem('token')).id,
       payment_id: searchParams.get("payment_id"),
       payment_type: searchParams.get("payment_type"),

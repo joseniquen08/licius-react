@@ -23,6 +23,10 @@ export const checkoutSlice = createSlice({
       state.contentPost = action.payload;
       localStorage.setItem("contentPost", action.payload);
     },
+    setAttachmentUrls: (state, action) => {
+      state.attachmentUrls = action.payload;
+      localStorage.setItem("attachmentUrls", JSON.stringify(action.payload));
+    },
     setTotalDaysAction: (state, action) => {
       state.totalDays = action.payload;
       localStorage.setItem("totalDays", action.payload);
@@ -51,9 +55,10 @@ export const checkoutSlice = createSlice({
   }
 });
 
-export const { setTitlePostAction, setContentPostAction, setTotalDaysAction, setFinalDateAction, setTotalPriceAction, setFinalTimeAction, setResponsePaymentSuccessAction } = checkoutSlice.actions;
+export const { setTitlePostAction, setContentPostAction, setAttachmentUrls, setTotalDaysAction, setFinalDateAction, setTotalPriceAction, setFinalTimeAction, setResponsePaymentSuccessAction } = checkoutSlice.actions;
 export const titleP = (state) => state.checkout.titlePost;
 export const contentP = (state) => state.checkout.contentPost;
+export const attachmentURLS = (state) => state.checkout.attachmentUrls;
 export const totalD = (state) => state.checkout.totalDays;
 export const finalD = (state) => state.checkout.finalDate;
 export const totalP = (state) => state.checkout.totalPrice;

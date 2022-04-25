@@ -45,7 +45,7 @@ export const ModalSearch = ({ searchIsOpen, closeSearchModal }) => {
                       type="text"
                       name="comment"
                       placeholder="Buscar"
-                      className="placeholder:text-sm placeholder:font-inter focus: text-sm block w-full focus:outline-none pl-9 pr-6 py-1.5 border border-slate-300 rounded-lg resize-none"
+                      className="placeholder:text-sm placeholder:font-inter focus:border-slate-400 focus:ring-0 text-sm block w-full focus:outline-none pl-9 pr-6 py-1.5 border border-slate-300 rounded-lg resize-none"
                     />
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <span className="text-slate-600 sm:text-sm">

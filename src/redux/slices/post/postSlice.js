@@ -11,6 +11,9 @@ export const postSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
+    setLoadingClick: (state, action) => {
+      state.postIsLoading = action.payload;
+    },
     setTitleNewPostAction: (state, action) => {
       state.titleNewPost = action.payload;
     },
@@ -26,9 +29,9 @@ export const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createPostWithouthPaymentAsync.pending, (state, action) => {
-        state.postIsLoading = true;
-      })
+      // .addCase(createPostWithouthPaymentAsync.pending, (state, action) => {
+      //   state.postIsLoading = true;
+      // })
       .addCase(createPostWithouthPaymentAsync.fulfilled, (state, action) => {
         state.postIsLoading = false;
         state.createPostSuccess = true;
@@ -37,7 +40,7 @@ export const postSlice = createSlice({
   }
 });
 
-export const { setTitleNewPostAction, setContentNewPostAction, setCreatePostSuccessAction, setPostSuccessAction } = postSlice.actions;
+export const { setLoadingClick, setTitleNewPostAction, setContentNewPostAction, setCreatePostSuccessAction, setPostSuccessAction } = postSlice.actions;
 export const loadingPost = (state) => state.post.postIsLoading;
 export const titleNP = (state) => state.post.titleNewPost;
 export const contentNP = (state) => state.post.contentNewPost;

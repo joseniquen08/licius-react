@@ -5,9 +5,9 @@ export const getPosts = async () => {
     const response = await fetch(`${URI_SERVER}${ENDPOINTS.GETPOSTS}`, {
       method: 'get',
     });
-    const data = await response.json();
-    console.log(data);
-    return data;
+    const { posts } = await response.json();
+    console.log(posts);
+    return posts;
   } catch (error) {
     console.log(error);
   }

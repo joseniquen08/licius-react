@@ -8,8 +8,9 @@ import { HiOutlineSpeakerphone } from "react-icons/hi";
 import Masonry from "react-masonry-css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { contentP, createPreferenceAsync, setContentPostAction, setFinalDateAction, setFinalTimeAction, setTitlePostAction, setTotalDaysAction, setTotalPriceAction } from "../../../../redux/slices/post/checkout/checkoutSlice";
-import { contentNP, createPostWithouthPaymentAsync, createPS, loadingPost, setContentNewPostAction, setPostSuccessAction, setTitleNewPostAction } from "../../../../redux/slices/post/postSlice";
+import { contentP, createPreferenceAsync, setAttachmentUrls, setContentPostAction, setFinalDateAction, setFinalTimeAction, setTitlePostAction, setTotalDaysAction, setTotalPriceAction } from "../../../../redux/slices/post/checkout/checkoutSlice";
+import { contentNP, createPostWithouthPaymentAsync, createPS, loadingPost, setContentNewPostAction, setLoadingClick, setPostSuccessAction, setTitleNewPostAction } from "../../../../redux/slices/post/postSlice";
+import { uploadImage } from '../../../../utils/api/services/shared/upload';
 import decodeToken from "../../../../utils/jwt/decode";
 import { Spinner } from "../../../shared/Spinner";
 
@@ -56,12 +57,16 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
   const handlePost = async () => {
     if (postTitleRef.current.value !== "") {
       if (postContentRef.current.value !== ""){
+        dispatch(setLoadingClick(true));
+        let urlImagesCloudinary = [];
         dispatch(setTitleNewPostAction(postTitleRef.current.value));
         dispatch(setContentNewPostAction(postContentRef.current.value));
-        if (imagesUrl.length !== 0) {
-          for (const image of imagesUrl) {
-            // dispatch(setContentPostAction(image));
-          }
+        if (imagesRef.current.files.length !== 0) {
+          const fileListArray = Array.from(imagesRef.current.files);
+          await Promise.all(fileListArray.map(async (image) => {
+            const url = await uploadImage(image);
+            urlImagesCloudinary.push(url);
+          }));
         }
         if (isPromoted) {
           const orderData = {
@@ -71,6 +76,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
           }
           dispatch(setTitlePostAction(postTitleRef.current.value));
           dispatch(setContentPostAction(postContentRef.current.value));
+          dispatch(setAttachmentUrls(urlImagesCloudinary));
           dispatch(setTotalDaysAction(totalDays));
           dispatch(setFinalDateAction(moment(startDate).format('L')));
           dispatch(setFinalTimeAction(moment(startDate).format('LT')));
@@ -82,7 +88,7 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
             user_id: decodeToken(localStorage.getItem('token')).id,
             title: postTitleRef.current.value,
             content: postContentRef.current.value,
-            attachment_urls: []
+            attachment_urls: urlImagesCloudinary,
           }));
         }
       } else {
@@ -109,12 +115,14 @@ export const ModalNewPost = ({ postIsOpen, closePostModal }) => {
   }
 
   const processImage = (e) => {
-    let images = [];
+    let imagesMasonry = [];
+    // let imagesUpload = [];
     for (let i = 0; i < e.target.files.length; i++) {
       const imageUrl = URL.createObjectURL(e.target.files[i]);
-      images.push(imageUrl);
+      imagesMasonry.push(imageUrl);
+      // imagesUpload.push(e.target.files[i]);
     }
-    setImagesUrl(images);
+    setImagesUrl(imagesMasonry);
   }
 
   useEffect(() => {
