@@ -9,11 +9,13 @@ import { loadingSignUpUser, signUpRestaurantAsync } from "../../../redux/slices/
 import { Spinner } from "../../shared/Spinner";
 
 const people = [
-  { name: 'Opción 1', id: 1 },
-  { name: 'Opción 2', id: 2 },
-  { name: 'Opción 3', id: 3 },
-  { name: 'Opción 4', id: 4 },
-  { name: 'Opción 5', id: 5 },
+  { name: 'Comida Rápida', id: 1 },
+  { name: 'Criolla', id: 2 },
+  { name: 'Resto Bar', id: 3 },
+  { name: 'Chifa', id: 4 },
+  { name: 'Vegana', id: 5 },
+  { name: 'Buffet', id: 6 },
+  { name: 'Mediterránea', id: 7 },
 ]
 
 export const SignUpRestaurant = () => {
